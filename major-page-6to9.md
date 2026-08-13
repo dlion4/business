@@ -8,7 +8,7 @@ The multi-business `currentBusinessKey` context flows through every page, so all
 
 ---
 
-# PAGE 1: GET PAID (`get-paid.html`)
+# ✅PAGE 1: GET PAID (`get-paid.html`)
 
 **Absorbs:** Collections & Merchant (3.2) + Invoicing & Billing (3.3)
 **Zone:** 💰 Money In
@@ -391,7 +391,7 @@ Return users don't need to see the full page every time. A landlord who logs in 
 ---
 ---
 
-# PAGE 2: PAY SUPPLIERS (`pay-suppliers.html`)
+# ✅PAGE 2: PAY SUPPLIERS (`pay-suppliers.html`)
 
 **Absorbs:** Accounts Payable (3.6) + Bulk Disbursements (3.5) + Payroll (3.4)
 **Zone:** 💸 Money Out
@@ -915,7 +915,7 @@ Identical reasoning to Get Paid's Quick Actions — power users need speed. A fi
 ---
 ---
 
-# PAGE 3: CASH & ACCOUNTS (`cash-accounts.html`)
+# ✅PAGE 3: CASH & ACCOUNTS (`cash-accounts.html`)
 
 **Absorbs:** Treasury (3.7) + Open Banking (3.10) + Virtual Accounts (3.9) + Multi-Currency (3.11)
 **Zone:** 🏦 Your Money
@@ -1437,7 +1437,7 @@ Consistency across the superapp is key to usability. If Get Paid and Pay Supplie
 
 
 
-# PAGE 4: BOOKKEEPING & TAXES (`bookkeeping-taxes.html`)
+# ✅PAGE 4: BOOKKEEPING & TAXES (`bookkeeping-taxes.html`)
 
 **Absorbs:** Financial Reporting (3.8) + expanded to include the General Ledger, AI Receipt Capture, and full KRA Statutory Compliance (from doc sections 5.4 & 5.5)
 **Zone:** 📦 Your Business
@@ -1943,7 +1943,7 @@ The Bookkeeping & Taxes page is dense and complex — it has 9 major sections sp
 ---
 
 
-# PAGE 5: SETTINGS & SECURITY (`settings-security.html`)
+# PAGES 5 to 9: 
 
 **Absorbs:** Onboarding (3.12) + Settings (3.14) + Support/Disputes (3.13)
 **Zone:** ⚙️ Run
@@ -1952,7 +1952,7 @@ The Bookkeeping & Taxes page is dense and complex — it has 9 major sections sp
 
 ---
 
-## Section 5.1 — Business Profile & KYB (Know Your Business)
+## Section 5 — Business Profile & KYB (Know Your Business)
 
 **What it contains:**
 The master identity and compliance record for the business. This is the data that PayMo, KRA, CBK, and banks use to identify and verify the business. It's also the data that appears on invoices, receipts, and customer-facing communications.
@@ -2078,7 +2078,80 @@ The multi-business/portfolio use case is the unlock for property owners, holding
 
 ---
 
-## Section 5.3 — Team Management & Roles (RBAC)
+
+
+
+
+
+## Section 5.5 — Payment & Invoicing Configuration
+
+**What it contains:**
+All the default settings that govern how the business gets paid and how its invoices look/behave. These are the "set it once, forget it" settings that affect the day-to-day experience on the Get Paid page.
+
+**Payment Method Configuration:**
+- Per-channel settings:
+  - **M-Pesa Paybill**: Paybill number (assigned by PayMo), account reference format advice ("Use invoice number as account reference"), callback URL (technical — pre-configured by PayMo, shown for transparency)
+  - **M-Pesa Till**: Till number (assigned by PayMo), Lipa na M-Pesa settings
+  - **Bank Transfer**: default bank account for transfers (selected from Cash & Accounts linked banks), PesaLink code display
+  - **Card Payments**: card acceptance terms (online only, or online + POS), card brands accepted (Visa, Mastercard)
+  - **QR Payments**: QR code format (static vs. dynamic default), supported wallets
+  - **Payment Links**: default link expiry (7 days, 14 days, 30 days, never), default link landing page theme
+
+**Fee Bearer Settings:**
+- For each payment method: who bears the transaction fee?
+  - "Business absorbs the fee" (customer pays the invoiced amount, business receives amount minus fee)
+  - "Customer bears the fee" (customer pays invoiced amount + fee — the fee is added at checkout/payment)
+  - "Split" (business absorbs X%, customer pays Y%)
+- Default: "Business absorbs" (most common, least friction for the customer)
+- This setting can be overridden per-invoice if needed
+
+**Invoice Template & Branding:**
+- Template selector: Professional (clean, corporate), Simple (minimal, for small businesses), Retail (receipt-style, for POS/instant invoices)
+- **Live preview**: shows the selected template with the business's actual data (logo, name, address, Paybill, bank details) as it will appear to the customer
+- **Customization**:
+  - Logo position and size
+  - Primary and accent colors (matches brand colors from Business Profile)
+  - Font selection (from a curated list of professional fonts)
+  - Show/hide fields: "Show KRA PIN on invoice?", "Show payment terms?", "Show customer's KRA PIN?", "Show eTIMS QR code?" (eTIMS QR is mandatory if eTIMS is enabled)
+  - Footer text: "Thank you for your business" or custom message
+  - Attachments: auto-attach terms & conditions PDF to every invoice
+
+**Default Payment Terms:**
+- Default due date: "On Receipt", "15 Days", "30 Days", "60 Days", "End of Month following invoice date", "Custom"
+- Late payment penalty: "Apply X% late fee after Y days overdue" — if enabled, the system automatically adds the penalty to overdue invoices and shows it on statements
+- Early payment discount: "Offer X% discount if paid within Y days" — shown on the invoice as "2/10 Net 30" (2% discount if paid within 10 days, full amount due in 30 days)
+
+**Receipt & Notification Settings:**
+- **Auto-receipt**: "Automatically send a payment receipt to the customer when a payment is received" — toggle on/off
+- **Receipt channels**: Email, SMS, WhatsApp — select which channels to use (and in what order of preference)
+- **Receipt template**: customize the receipt message (similar to invoice template but shorter)
+- **Invoice send tracking**: "Notify me when a customer opens my invoice email" — toggle on/off
+
+**Numbering Formats:**
+- Invoice number prefix and format: "INV-", "TS-2025-", custom
+- Starting number: "Next invoice will be #INV-0234"
+- Payment link reference format
+- Receipt number format
+- "Prevent duplicate numbers" toggle (always on — cannot be disabled)
+
+**Detailed information & data points:**
+- Invoice templates are rendered server-side as PDFs using a templating engine — the live preview uses the same engine, so what the user sees is exactly what the customer gets
+- Fee bearer settings affect the payment checkout flow: if "Customer bears the fee", the checkout page shows "Amount: KES 10,000 + Fee: KES 50 = Total: KES 10,050"
+- Late payment penalties are calculated automatically but are NOT added to the invoice without the business owner's review — they appear as "Suggested penalty" that the owner can apply or waive
+- Early payment discounts affect the receivables tracking: if a customer takes the discount, the invoice is marked as "Paid (with discount)" and the discount amount is recorded as a separate expense line
+- Numbering formats are per-business: if the user has 5 businesses in the portfolio, each can have its own invoice prefix ("TS-" for TechSol, "KR-" for Kilimani Rentals, etc.)
+
+**Reason this section exists:**
+These are the settings that the business owner sets up once during onboarding and then never thinks about again — but if they're wrong, every invoice and every payment is affected. The invoice template is the business's public face: a professional, branded invoice builds trust with customers; a generic, unbranded one looks amateur. The fee bearer setting is a business decision that has a direct financial impact: if the business absorbs KES 50 per transaction and does 1,000 transactions a month, that's KES 50,000/month in fees. If they pass it to the customer, it's zero. The late payment penalty and early payment discount are tools most SMEs never use because they're hard to calculate manually — automated, they become powerful levers for improving cash flow. The receipt auto-send ensures the customer gets proof of payment instantly, reducing "did you get my money?" calls.
+
+---
+
+
+
+
+
+## page 6
+## Section 6.1 — Team Management & Roles (RBAC)
 
 **What it contains:**
 The access control system — defining who can do what on the platform. This is Role-Based Access Control (RBAC) with PayMo-specific roles and customizable permissions. It's the difference between "everyone can approve payments" (dangerous) and "only the director can approve above KES 100K" (safe).
@@ -2201,126 +2274,18 @@ A PayMo account controls the business's money. If it's compromised, the business
 
 ---
 
-## Section 5.5 — Payment & Invoicing Configuration
 
-**What it contains:**
-All the default settings that govern how the business gets paid and how its invoices look/behave. These are the "set it once, forget it" settings that affect the day-to-day experience on the Get Paid page.
 
-**Payment Method Configuration:**
-- Per-channel settings:
-  - **M-Pesa Paybill**: Paybill number (assigned by PayMo), account reference format advice ("Use invoice number as account reference"), callback URL (technical — pre-configured by PayMo, shown for transparency)
-  - **M-Pesa Till**: Till number (assigned by PayMo), Lipa na M-Pesa settings
-  - **Bank Transfer**: default bank account for transfers (selected from Cash & Accounts linked banks), PesaLink code display
-  - **Card Payments**: card acceptance terms (online only, or online + POS), card brands accepted (Visa, Mastercard)
-  - **QR Payments**: QR code format (static vs. dynamic default), supported wallets
-  - **Payment Links**: default link expiry (7 days, 14 days, 30 days, never), default link landing page theme
 
-**Fee Bearer Settings:**
-- For each payment method: who bears the transaction fee?
-  - "Business absorbs the fee" (customer pays the invoiced amount, business receives amount minus fee)
-  - "Customer bears the fee" (customer pays invoiced amount + fee — the fee is added at checkout/payment)
-  - "Split" (business absorbs X%, customer pays Y%)
-- Default: "Business absorbs" (most common, least friction for the customer)
-- This setting can be overridden per-invoice if needed
 
-**Invoice Template & Branding:**
-- Template selector: Professional (clean, corporate), Simple (minimal, for small businesses), Retail (receipt-style, for POS/instant invoices)
-- **Live preview**: shows the selected template with the business's actual data (logo, name, address, Paybill, bank details) as it will appear to the customer
-- **Customization**:
-  - Logo position and size
-  - Primary and accent colors (matches brand colors from Business Profile)
-  - Font selection (from a curated list of professional fonts)
-  - Show/hide fields: "Show KRA PIN on invoice?", "Show payment terms?", "Show customer's KRA PIN?", "Show eTIMS QR code?" (eTIMS QR is mandatory if eTIMS is enabled)
-  - Footer text: "Thank you for your business" or custom message
-  - Attachments: auto-attach terms & conditions PDF to every invoice
 
-**Default Payment Terms:**
-- Default due date: "On Receipt", "15 Days", "30 Days", "60 Days", "End of Month following invoice date", "Custom"
-- Late payment penalty: "Apply X% late fee after Y days overdue" — if enabled, the system automatically adds the penalty to overdue invoices and shows it on statements
-- Early payment discount: "Offer X% discount if paid within Y days" — shown on the invoice as "2/10 Net 30" (2% discount if paid within 10 days, full amount due in 30 days)
 
-**Receipt & Notification Settings:**
-- **Auto-receipt**: "Automatically send a payment receipt to the customer when a payment is received" — toggle on/off
-- **Receipt channels**: Email, SMS, WhatsApp — select which channels to use (and in what order of preference)
-- **Receipt template**: customize the receipt message (similar to invoice template but shorter)
-- **Invoice send tracking**: "Notify me when a customer opens my invoice email" — toggle on/off
 
-**Numbering Formats:**
-- Invoice number prefix and format: "INV-", "TS-2025-", custom
-- Starting number: "Next invoice will be #INV-0234"
-- Payment link reference format
-- Receipt number format
-- "Prevent duplicate numbers" toggle (always on — cannot be disabled)
 
-**Detailed information & data points:**
-- Invoice templates are rendered server-side as PDFs using a templating engine — the live preview uses the same engine, so what the user sees is exactly what the customer gets
-- Fee bearer settings affect the payment checkout flow: if "Customer bears the fee", the checkout page shows "Amount: KES 10,000 + Fee: KES 50 = Total: KES 10,050"
-- Late payment penalties are calculated automatically but are NOT added to the invoice without the business owner's review — they appear as "Suggested penalty" that the owner can apply or waive
-- Early payment discounts affect the receivables tracking: if a customer takes the discount, the invoice is marked as "Paid (with discount)" and the discount amount is recorded as a separate expense line
-- Numbering formats are per-business: if the user has 5 businesses in the portfolio, each can have its own invoice prefix ("TS-" for TechSol, "KR-" for Kilimani Rentals, etc.)
 
-**Reason this section exists:**
-These are the settings that the business owner sets up once during onboarding and then never thinks about again — but if they're wrong, every invoice and every payment is affected. The invoice template is the business's public face: a professional, branded invoice builds trust with customers; a generic, unbranded one looks amateur. The fee bearer setting is a business decision that has a direct financial impact: if the business absorbs KES 50 per transaction and does 1,000 transactions a month, that's KES 50,000/month in fees. If they pass it to the customer, it's zero. The late payment penalty and early payment discount are tools most SMEs never use because they're hard to calculate manually — automated, they become powerful levers for improving cash flow. The receipt auto-send ensures the customer gets proof of payment instantly, reducing "did you get my money?" calls.
+## page 7
 
----
-
-## Section 5.6 — Integration & API Management
-
-**What it contains:**
-The configuration hub for connecting PayMo to external tools and services. This is distinct from the "Integrations Marketplace" page (which is the discovery/browsing interface) — this section is for managing active connections, API keys, and webhooks.
-
-**Active Integrations List:**
-- Cards for each connected integration:
-  - Integration name + logo: "WhatsApp Business", "QuickBooks", "Google Analytics", "Glovo"
-  - Status: Connected (green), Disconnected (red), Error (amber — e.g., "OAuth token expired")
-  - Last sync: "5 minutes ago"
-  - Data flow direction: "Receives data from WhatsApp", "Sends data to QuickBooks", "Bidirectional"
-  - Actions: Configure, Sync Now, Disconnect, View Logs
-- Each card links to the integration's specific configuration panel (varies by integration)
-
-**API Key Management (for developers):**
-- **API Keys Table**: Key Name, Key (masked: "pk_live_****7890"), Created Date, Last Used Date, Status (Active, Revoked), Permissions (Read, Write, Admin)
-- **Create API Key**: 
-  - Name: e.g., "Production Server", "Staging", "Zapier Integration"
-  - Permissions: Read-only (can fetch data), Read+Write (can create/update), Admin (full access — dangerous)
-  - IP Whitelist (optional): "Only allow this key from these IP addresses"
-  - Rate Limit: "Default (100 req/min)" or "Custom (up to 1000 req/min for Enterprise)"
-  - On create: the full key is shown ONCE. "Copy this key now. You will not be able to see it again." (Standard API key security practice)
-- **Revoke Key**: immediately invalidates the key. Any application using it will receive "401 Unauthorized" on the next request
-
-**Webhook Configuration:**
-- **Webhook Endpoints Table**: URL, Events (which events trigger this webhook), Status (Active, Paused, Failed), Last Delivery, Success Rate
-- **Add Webhook Endpoint**:
-  - URL: "https://myapp.com/paymo-webhook"
-  - Events to subscribe to (checkboxes): 
-    - Payment Received, Payment Failed, Invoice Created, Invoice Paid, Invoice Overdue, Payroll Executed, Balance Changed, etc.
-  - Secret: a signing secret used to verify that the webhook payload actually came from PayMo (HMAC signature)
-- **Webhook Logs**: table of recent deliveries: Event, Payload (viewable), Response Code (200, 404, 500), Response Body, Duration. Failed deliveries are retried with exponential backoff (1 min, 5 min, 15 min, 1 hour, up to 5 retries)
-- "Test Webhook" button: sends a sample payload to the endpoint to verify it's working
-
-**Data Export & Sync Settings:**
-- **Accounting Software Sync** (QuickBooks, Xero): 
-  - Sync direction: "PayMo → QuickBooks" (push transactions), "QuickBooks → PayMo" (pull data), "Bidirectional"
-  - Sync frequency: Real-time (via webhooks), Hourly, Daily
-  - Field mapping: which PayMo fields map to which QuickBooks fields (pre-configured, but editable for custom setups)
-  - Conflict resolution: "If a transaction exists in both systems, PayMo wins" or "QuickBooks wins" or "Ask me"
-- **E-commerce Sync** (WooCommerce, Shopify): auto-import orders as PayMo invoices, auto-mark as paid when payment is received
-- **CRM Sync** (Salesforce, HubSpot): sync customer data, invoice status, payment status
-
-**Detailed information & data points:**
-- API keys are hashed in the database (like passwords) — the full key is only shown once at creation time. The system stores the hash and verifies incoming requests by hashing the provided key and comparing
-- Webhook payloads are signed using HMAC-SHA256 with the webhook secret — the receiving application can verify the signature to ensure the payload is authentic and untampered
-- Webhook retries stop after 5 failed attempts (over ~24 hours). The user sees "Webhook to https://myapp.com failed 5 times. Paused. Click to retry." This prevents endless failed requests from consuming resources
-- Rate limits are enforced per API key, not per business — if the business has 3 API keys, each gets its own rate limit quota
-- For security: API keys inherit the permissions of the user who created them. If User A (Admin) creates a key, it has Admin permissions. If User B (Viewer) creates a key, it's automatically Read-only
-- Integration OAuth tokens are refreshed automatically in the background. If a refresh fails (e.g., the user revoked access in the third-party app), the integration status changes to "Error" with instructions to re-authenticate
-
-**Reason this section exists:**
-The "Integrations Marketplace" page is where the user discovers what they can connect. This section is where they *manage* those connections. Without it, the user has no visibility into whether an integration is working, when it last synced, or how to fix it when it breaks. The API key management is essential for businesses that have developers or use automation tools (Zapier, Make/Integromat) — they need to create, rotate, and revoke keys. The webhook system is the technical backbone of real-time integrations: when a payment is received in PayMo, the business's custom app gets notified instantly via webhook, allowing them to trigger internal workflows (update their database, send a custom SMS, log to their own system). The data export settings for QuickBooks/Xero address the "my accountant uses QuickBooks" reality — instead of forcing the accountant to switch to PayMo's bookkeeping, PayMo pushes the data to QuickBooks, meeting the accountant where they are.
-
----
-
-## Section 5.7 — Support Center & Dispute Management
+## Section  — Support Center & Dispute Management
 
 **What it contains:**
 The help and issue resolution hub. This combines self-service support (knowledge base, FAQs) with direct support channels (chat, email, phone) and a formal dispute tracking system for payment and compliance disputes.
@@ -2383,7 +2348,9 @@ When something goes wrong — a payment fails, KRA rejects an eTIMS invoice, the
 
 ---
 
-## Section 5.8 — Notifications & Communication Preferences
+
+## page 8: Notifications Center
+## Section  — Notifications & Communication Preferences
 
 **What it contains:**
 The control panel for how and when PayMo communicates with the business owner and their team. This ensures the user gets the right notifications through the right channel without being spammed.
@@ -2436,7 +2403,10 @@ Notifications are a double-edged sword. Too few, and the user misses important e
 
 ---
 
-## Section 5.9 — Data, Privacy & Account Management
+
+
+### page 9:  Account Management
+## Section  — Data, Privacy & Account Management
 
 **What it contains:**
 The nuclear options — data export, data deletion, account closure, and privacy settings. This section is used rarely but must exist for compliance (Kenya Data Protection Act — KDPA) and user trust.
@@ -2525,6 +2495,14 @@ Settings pages are notoriously hard to navigate because they're flat lists of op
 
 ---
 
+
+
+
+
+
+
+
+
 # END OF COMPREHENSIVE OUTLINE
 
 **Summary of the 5 consolidated pages and their section counts:**
@@ -2552,7 +2530,7 @@ Each page follows the established module pattern (`pages/<Module>.tsx` + `compon
 
 ---
 
-# PAGE 6: CUSTOMERS & CRM (`customers-crm.html`)
+# ✅PAGE 6: CUSTOMERS & CRM (`customers-crm.html`)
 
 **Zone:** 💰 Money In
 **Mental model for the user:** *"Who buys from me, what do they buy, how do I talk to them, and how do I keep them coming back?"*
@@ -2800,7 +2778,7 @@ The CRM page can become a deep rabbit hole of customer profiles and timelines. T
 ---
 ---
 
-# PAGE 7: PRODUCTS & ONLINE STORE (`products-store.html`)
+# ✅PAGE 7: PRODUCTS & ONLINE STORE (`products-store.html`)
 
 **Zone:** 📦 Your Business
 **Mental model for the user:** *"What I sell, displayed beautifully online, with a checkout that works via M-Pesa — my own mini-shop without paying Shopify."*
@@ -3091,7 +3069,7 @@ Running an online store requires frequent micro-actions: add a new product, chec
 ---
 ---
 
-# PAGE 8: INVENTORY & STOCK (`inventory-stock.html`)
+# ✅PAGE 8: INVENTORY & STOCK (`inventory-stock.html`)
 
 **Zone:** 📦 Your Business
 **Mental model for the user:** *"What do I have in my store/warehouse, what's running out, and when do I need to order more?"*
@@ -3335,7 +3313,7 @@ Warehouse workers and shop assistants don't have time to navigate through dashbo
 ---
 ---
 
-# PAGE 9: FUNDING, CREDIT & LENDING (`funding-credit.html`)
+# ✅PAGE 9: FUNDING, CREDIT & LENDING (`funding-credit.html`)
 
 **Zone:** 🚀 Grow
 **Mental model for the user:** *"I need cash to grow, buy stock, or bridge a gap — and I want to use my PayMo data to get it faster and cheaper than a bank."*
@@ -3859,7 +3837,7 @@ Every page continues the strict architectural pattern: rendering inside the `Bus
 
 ---
 
-# PAGE 11: INSURANCE & PROTECTION (`insurance-protection.html`)
+#  PAGE 11: INSURANCE & PROTECTION (`insurance-protection.html`)
 
 *(Note: While the core concepts of insurance were introduced in the previous section, this layout strictly follows the exact prompt requirements, explicitly detailing the "Rent/Default Protection", the "Instant Quote & Purchase from Balance" flow, and the specific policy mechanics requested.)*
 
@@ -4094,7 +4072,7 @@ Insurance is a background concern. The Quick Actions bar ensures that when a bik
 ---
 ---
 
-# PAGE 12: MARKETING & GROWTH (`marketing-growth.html`)
+# ✅PAGE 12: MARKETING & GROWTH (`marketing-growth.html`)
 
 **Zone:** 🚀 Grow
 **Mental model for the user:** *"I have 500 customers in PayMo. Let me text them a discount, track who buys, and grow my revenue without paying Mailchimp or hiring a marketer."*
@@ -4305,7 +4283,7 @@ Marketing requires speed. A trending topic on X (Twitter) might require an insta
 ---
 ---
 
-# PAGE 13: APPS & INTEGRATIONS (`apps-integrations.html`)
+# ✅PAGE 13: APPS & INTEGRATIONS (`apps-integrations.html`)
 
 **Zone:** 🚀 Grow
 **Mental model for the user:** *"I don't want to use three different apps. Connect my tools here so everything flows into PayMo."*
