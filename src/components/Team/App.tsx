@@ -62,7 +62,7 @@ function ModalHost() {
 }
 
 /* ---------- page ---------- */
-function Page() {
+function Page({ onNavigate }: { onNavigate?: (p: string) => void }) {
   const { modal, closeModal } = useStore();
   const [sideOpen, setSideOpen] = useState(false);
 
@@ -90,7 +90,7 @@ function Page() {
 
   return (
     <>
-      <Sidebar open={sideOpen} onClose={() => setSideOpen(false)} />
+      <Sidebar open={sideOpen} onClose={() => setSideOpen(false)} onNavigate={onNavigate} />
       <div className="pm-main">
         <Topbar onMenu={() => setSideOpen(true)} />
         <main className="pm-content">
@@ -126,10 +126,10 @@ function Page() {
   );
 }
 
-export default function App() {
+export default function App({ onNavigate }: { onNavigate?: (p: string) => void }) {
   return (
     <StoreProvider>
-      <Page />
+      <Page onNavigate={onNavigate} />
     </StoreProvider>
   );
 }

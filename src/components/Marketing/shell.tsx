@@ -69,6 +69,8 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
                         "Customers & CRM": "crm",
                         "Products & Store": "productstore",
                         "Inventory & Stock": "inventory",
+                        "Funding & Credit": "funding",
+                        "Insurance & Protection": "insurance",
                         "Marketing & Growth": "marketing",
                         "Dashboard": "dashboard",
                       };

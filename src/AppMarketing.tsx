@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Menu, X, ChevronDown, Search, Bell, User, Settings, Building2, LogOut, Sparkles, Wallet, LayoutGrid, Zap, Package } from "lucide-react";
+import { Menu, X, ChevronDown, Search, Bell, User, Settings, Building2, Sparkles, Wallet, LayoutGrid, Zap, Package, Users, Shield, Database, Puzzle } from "lucide-react";
 import { StoreProvider, useStore } from "./components/Marketing/store";
-import { ToastHost } from "./components/Marketing/ui";
 import {
   CampaignsSection, GrowthAnalytics, LoyaltySection, MarketingCommandCenter, PageHeader,
   PromotionsSection, ReviewsSection, SocialCommerce, WizardsBanner,
@@ -17,9 +16,9 @@ import {
   ShareReferralModal, SocialComposerModal, TemplatesModal,
 } from "./components/Marketing/marketingDialogs";
 import { cls } from "./lib";
-import { NAVIGATION, ZONES, type NavItem, type NavZone } from "./lib/navigation";
+import { NAVIGATION, ZONES, type NavZone } from "./lib/navigation";
 
-type NavPage = "dashboard" | "getpaid" | "paysuppliers" | "cash" | "books" | "crm" | "productstore" | "inventory" | "marketing";
+type NavPage = "dashboard" | "getpaid" | "paysuppliers" | "cash" | "books" | "crm" | "productstore" | "inventory" | "marketing" | "profile" | "team" | "disputes" | "notifications" | "data" | "integrations" | "portfolio" | "funding" | "insurance";
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
   LayoutGrid,
@@ -30,6 +29,11 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
   Sparkles,
   Settings,
   Package,
+  Users,
+  Shield,
+  Bell,
+  Database,
+  Puzzle,
 };
 
 /* ---------- modal registry ---------- */
@@ -70,7 +74,7 @@ function ModalHost() {
 }
 
 /* ---------- page ---------- */
-function PageContent({ onNavigate }: { onNavigate?: (p: NavPage) => void }) {
+function PageContent() {
   const { modal, closeModal } = useStore();
 
   useEffect(() => {
@@ -136,9 +140,9 @@ export default function AppMarketing({ onNavigate }: { onNavigate?: (p: NavPage)
 }
 
 function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void; currentPage?: NavPage }) {
-  const { business, setBusiness, notifications, markNotifsRead, dismissNotif, toast, toasts, dismissToast } = useStore();
+  const { business, notifications, toast, toasts, dismissToast } = useStore();
   const [sideOpen, setSideOpen] = useState(false);
-  const [bizSwitch, setBizSwitch] = useState(false);
+  const [, setBizSwitch] = useState(false);
   const [bellOpen, setBellOpen] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [search, setSearch] = useState("");
@@ -255,17 +259,16 @@ function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void;
           </div>
         </header>
 
-        <PageContent onNavigate={onNavigate} />
+        <PageContent />
       </div>
 
       {/* ══════════ TOASTS ══════════ */}
       <div className="pm-toast-stack">
         {toasts.map((t) => (
-          <div key={t.id} className={`pm-toast pm-toast-${t.tone}`}>
-            <span className="pm-toast-icon">{t.icon}</span>
+          <div key={t.id} className={`pm-toast pm-toast-${t.type}`}>
             <div className="flex-grow-1">
-              <div className="fw-bold" style={{ fontSize: "0.82rem" }}>{t.title}</div>
-              <div style={{ fontSize: "0.76rem", color: "#667085" }}>{t.message}</div>
+              {t.title && <div className="fw-bold" style={{ fontSize: "0.82rem" }}>{t.title}</div>}
+              <div style={{ fontSize: "0.76rem", color: "#667085" }}>{t.msg}</div>
             </div>
             <button className="pm-toast-close" onClick={() => dismissToast(t.id)}><X size={14} /></button>
           </div>

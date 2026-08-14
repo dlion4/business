@@ -4,160 +4,140 @@ import { useStore } from "./store";
 
 /* ============ helpers ============ */
 export const toneOf: Record<string, string> = {
-  Active: "success",
-  Draft: "muted",
-  Archived: "muted",
-  Sent: "info",
-  Partial: "warning",
-  Received: "success",
-  Closed: "muted",
-  Counting: "warning",
-  Completed: "success",
-  "Pending inspection": "warning",
-  Quarantined: "violet",
-  Restocked: "success",
-  Refunded: "muted",
-  Destroyed: "danger",
-  Damage: "danger",
-  Theft: "danger",
-  Expired: "danger",
-  "Cycle count": "muted",
-  "Return to supplier": "violet",
-  "Initial count": "info",
-  Found: "success",
-  Other: "muted",
-  Warehouse: "success",
-  "Shop floor": "info",
-  Quarantine: "violet",
-  "In transit": "warning",
-  Approved: "success",
-  Pending: "warning",
-  Rejected: "danger",
-  Disbursed: "info",
-  Submitted: "info",
-  "In review": "violet",
-  "Paid off": "muted",
-  Overdue: "danger",
-  "Awaiting acceptance": "warning",
-  Due: "warning",
-  Upcoming: "muted",
-  Paid: "success",
-  Available: "success",
-  Financed: "info",
-  Ineligible: "muted",
-  "Past due": "danger",
-  Verified: "success",
-  Uploaded: "warning",
-  Missing: "danger",
-  "Under review": "violet",
-  Scheduled: "info",
-  Paused: "warning",
-  Ended: "muted",
-  Live: "success",
-  Published: "success",
-  "Pending review": "warning",
-  Replied: "info",
-  Delivered: "info",
-  Queued: "violet",
-  Unread: "warning",
-  Gold: "warning",
-  Silver: "muted",
-  Bronze: "success",
-  WhatsApp: "success",
-  Instagram: "violet",
-  Facebook: "info",
-  TikTok: "muted",
-  Email: "muted",
-  SMS: "muted",
-  Healthy: "success",
-  Error: "danger",
-  Syncing: "warning",
-  Success: "success",
-  Failed: "danger",
-  Resolved: "success",
-  Unresolved: "danger",
-  "Reconnect needed": "warning",
-  "Not connected": "muted",
-  Watch: "warning",
-  Critical: "danger",
-  Vacant: "muted",
-  Notice: "warning",
-  Open: "info",
-  Assigned: "violet",
-  Executed: "success",
-  "Pending approval": "warning",
-  "No Access": "muted",
-  Viewer: "info",
-  Standard: "success",
-  Admin: "danger",
-  Ltd: "success",
-  "Sole Prop": "info",
-  "SACCO / NGO": "violet",
-  Rental: "warning",
-  "Under Review": "warning",
-  Inactive: "muted",
-  Suspended: "danger",
-  "Level 1": "warning",
-  "Level 2": "success",
-  "Level 3": "violet",
-  "Expiring soon": "warning",
-  Owner: "danger",
-  Manager: "info",
-  Accountant: "violet",
-  Staff: "muted",
-  "Custom role": "violet",
-  "Pending invite": "warning",
-  Revoked: "muted",
-  Enabled: "success",
-  Disabled: "muted",
-  Full: "success",
-  Approve: "violet",
-  Edit: "info",
-  View: "muted",
-  None: "muted",
-  Create: "success",
-  "Needs Evidence": "warning",
-  "Under Arbitration": "violet",
-  Won: "success",
-  Lost: "danger",
-  Escalated: "danger",
-  "Pending Customer": "warning",
-  Low: "muted",
-  Medium: "info",
-  High: "warning",
-  Urgent: "danger",
-  Read: "muted",
-  Opened: "success",
-  Bounced: "danger",
-  Muted: "muted",
-  Important: "warning",
-  Routine: "muted",
-  Processing: "warning",
-  Connected: "success",
-  Disconnected: "danger",
-  Required: "danger",
-  "Full Access": "success",
-  Limited: "warning",
-  "Read Only": "info",
-  "In Progress": "warning",
-  Planned: "muted",
+  Active: "green", Draft: "slate", Archived: "slate",
+  Sent: "blue", Partial: "amber", Received: "green", Closed: "slate",
+  Counting: "amber", Completed: "green",
+  "Pending inspection": "amber", Quarantined: "violet", Restocked: "green", Refunded: "slate", Destroyed: "red",
+  Damage: "red", Theft: "red", Expired: "red", "Cycle count": "slate", "Return to supplier": "violet", "Initial count": "blue", Found: "green", Other: "slate",
+  Warehouse: "green", "Shop floor": "blue", Quarantine: "violet", "In transit": "amber",
+  /* funding & credit */
+  Approved: "green", Pending: "amber", Rejected: "red", Disbursed: "blue", Submitted: "blue",
+  "In review": "violet", "Paid off": "slate", Overdue: "red", "Awaiting acceptance": "amber",
+  Due: "amber", Upcoming: "slate", Paid: "green",
+  Available: "green", Financed: "blue", Ineligible: "slate", "Past due": "red",
+  Verified: "green", Uploaded: "amber", Missing: "red", "Under review": "violet",
+  /* marketing & growth */
+  Scheduled: "blue", Paused: "amber", Ended: "slate", Live: "green",
+  Published: "green", "Pending review": "amber", Replied: "blue",
+  Delivered: "blue", Queued: "violet", Unread: "amber",
+  Gold: "amber", Silver: "slate", Bronze: "green",
+  WhatsApp: "green", Instagram: "violet", Facebook: "blue", TikTok: "slate", Email: "slate", SMS: "slate",
+  /* apps & integrations */
+  Healthy: "green", Error: "red", Syncing: "amber", Success: "green", Failed: "red",
+  Resolved: "green", Unresolved: "red", "Reconnect needed": "amber", "Not connected": "slate",
+  /* portfolio */
+  Watch: "amber", Critical: "red", Vacant: "slate", Notice: "amber",
+  Open: "blue", Assigned: "violet", Executed: "green", "Pending approval": "amber",
+  "No Access": "slate", Viewer: "blue", Standard: "green", Admin: "red",
+  Ltd: "green", "Sole Prop": "blue", "SACCO / NGO": "violet", Rental: "amber",
+  /* KYB & profile */
+  "Under Review": "amber", Inactive: "slate", Suspended: "red",
+  "Level 1": "amber", "Level 2": "green", "Level 3": "violet",
+  "Expiring soon": "amber",
+  /* team & roles */
+  Owner: "red", Manager: "blue", Accountant: "violet", Staff: "slate", "Custom role": "violet",
+  "Pending invite": "amber", Revoked: "slate", Enabled: "green", Disabled: "slate",
+  Full: "green", Approve: "violet", Edit: "blue", View: "slate", None: "slate", Create: "green",
+  /* disputes & support */
+  "Needs Evidence": "amber", "Under Arbitration": "violet", Won: "green", Lost: "red",
+  Escalated: "red", "Pending Customer": "amber",
+  Low: "slate", Medium: "blue", High: "amber", Urgent: "red",
+  /* notifications center */
+  Read: "slate", Opened: "green", Bounced: "red", Muted: "slate",
+  Important: "amber", Routine: "slate",
 };
 
-export function Badge({ tone = "muted", children, className = "" }: { tone?: string; children: ReactNode; className?: string }) {
-  return <span className={`pm-badge pm-badge-${tone} ${className}`}>{children}</span>;
+export function Badge({ tone = "slate", children, className = "" }: { tone?: string; children: ReactNode; className?: string }) {
+  return <span className={`badge-soft ${tone} ${className}`}>{children}</span>;
 }
 
 export function StatusBadge({ status }: { status: string }) {
-  const getIconClass = () => {
-    if (status === "Active" || status === "Received" || status === "Restocked" || status === "Completed" || status === "Found" || status === "Available" || status === "Verified") return "bi-check-circle";
-    if (status === "Draft") return "bi-x";
-    if (status === "Pending" || status === "Partial" || status === "In Progress" || status === "Processing" || status === "Pending approval" || status === "Pending review" || status === "Pending Customer" || status === "Pending invite" || status === "Awaiting acceptance" || status === "Due" || status === "Upcoming" || status === "Scheduled" || status === "Paused" || status === "Watch" || status === "Notice" || status === "Important" || status === "Unread" || status === "Gold" || status === "Level 1" || status === "Expiring soon" || status === "Needs Evidence" || status === "Limited" || status === "Medium" || status === "High" || status === "Urgent" || status === "Ineligible" || status === "Missing" || status === "Under review" || status === "Under Review" || status === "Reconnect needed" || status === "Syncing" || status === "Critical" || status === "Low" || status === "Routine" || status === "Planned" || status === "In transit" || status === "Quarantine" || status === "Quarantined" || status === "Return to supplier" || status === "Cycle count" || status === "Initial count" || status === "Pending inspection" || status === "Counting" || status === "Damage" || status === "Theft" || status === "Expired" || status === "Destroyed" || status === "Refunded" || status === "Closed" || status === "Archived" || status === "Paid off" || status === "Inactive" || status === "Suspended" || status === "Revoked" || status === "Disabled" || status === "None" || status === "Muted" || status === "Read" || status === "Bounced" || status === "Disconnected" || status === "Failed" || status === "Unresolved" || status === "Lost" || status === "Escalated" || status === "Error" || status === "Not connected" || status === "No Access" || status === "Past due" || status === "Overdue") return "bi-exclamation-triangle";
-    if (status === "Sent" || status === "Disbursed" || status === "Submitted" || status === "In review" || status === "Queued" || status === "Assigned" || status === "Approve" || status === "Under Arbitration" || status === "Viewer" || status === "Read Only" || status === "View" || status === "Routine" || status === "Planned" || status === "Upcoming" || status === "Scheduled" || status === "Paused" || status === "Watch" || status === "Notice" || status === "Important" || status === "Unread" || status === "Gold" || status === "Level 1" || status === "Expiring soon" || status === "Needs Evidence" || status === "Limited" || status === "Medium" || status === "High" || status === "Urgent" || status === "Ineligible" || status === "Missing" || status === "Under review" || status === "Under Review" || status === "Reconnect needed" || status === "Syncing" || status === "Critical" || status === "Low" || status === "Routine" || status === "Planned" || status === "In transit" || status === "Quarantine" || status === "Quarantined" || status === "Return to supplier" || status === "Cycle count" || status === "Initial count" || status === "Pending inspection" || status === "Counting" || status === "Damage" || status === "Theft" || status === "Expired" || status === "Destroyed" || status === "Refunded" || status === "Closed" || status === "Archived" || status === "Paid off" || status === "Inactive" || status === "Suspended" || status === "Revoked" || status === "Disabled" || status === "None" || status === "Muted" || status === "Read" || status === "Bounced" || status === "Disconnected" || status === "Failed" || status === "Unresolved" || status === "Lost" || status === "Escalated" || status === "Error" || status === "Not connected" || status === "No Access" || status === "Past due" || status === "Overdue") return "bi-info-circle";
-    return "bi-check-circle";
-  };
+  const icon =
+    status === "Active" || status === "Received" || status === "Restocked" || status === "Completed" || status === "Found" || status === "Available" || status === "Verified" ? "bi-check-circle-fill" :
+    status === "Draft" ? "bi-pencil-fill" :
+    status === "Archived" || status === "Closed" || status === "Paid off" ? "bi-archive-fill" :
+    status === "Sent" || status === "Submitted" ? "bi-send-check-fill" :
+    status === "Approved" || status === "Paid" ? "bi-check2-circle" :
+    status === "Partial" || status === "Counting" || status === "Pending" || status === "Awaiting acceptance" || status === "Uploaded" || status === "Due" ? "bi-hourglass-split" :
+    status === "Pending inspection" || status === "In review" ? "bi-search" :
+    status === "Quarantined" ? "bi-shield-exclamation" :
+    status === "Refunded" ? "bi-arrow-counterclockwise" :
+    status === "Rejected" || status === "Overdue" || status === "Past due" || status === "Missing" ? "bi-exclamation-triangle-fill" :
+    status === "Destroyed" || status === "Damage" || status === "Theft" || status === "Expired" ? "bi-trash-fill" :
+    status === "Disbursed" || status === "Financed" ? "bi-cash-stack" :
+    status === "Cycle count" ? "bi-clipboard-check" :
+    status === "Return to supplier" ? "bi-box-arrow-left" :
+    status === "Initial count" ? "bi-plus-circle-fill" :
+    status === "Warehouse" ? "bi-buildings-fill" :
+    status === "Shop floor" ? "bi-shop" :
+    status === "In transit" ? "bi-truck" :
+    status === "Upcoming" || status === "Scheduled" ? "bi-calendar3" :
+    status === "Ineligible" ? "bi-slash-circle" :
+    status === "Under review" || status === "Pending review" ? "bi-eye" :
+    status === "Paused" ? "bi-pause-fill" :
+    status === "Ended" ? "bi-stop-fill" :
+    status === "Live" ? "bi-broadcast" :
+    status === "Published" ? "bi-globe2" :
+    status === "Replied" ? "bi-chat-dots" :
+    status === "Delivered" ? "bi-check2-all" :
+    status === "Queued" ? "bi-hourglass-split" :
+    status === "Unread" ? "bi-envelope-open-fill" :
+    status === "Gold" ? "bi-gem" :
+    status === "Silver" ? "bi-award" :
+    status === "Bronze" ? "bi-shield" :
+    status === "Healthy" || status === "Success" ? "bi-check-circle-fill" :
+    status === "Error" || status === "Failed" ? "bi-exclamation-triangle-fill" :
+    status === "Syncing" || status === "Partial" ? "bi-hourglass-split" :
+    status === "Paused" ? "bi-pause-fill" :
+    status === "Resolved" ? "bi-check2-circle" :
+    status === "Unresolved" ? "bi-exclamation-octagon-fill" :
+    status === "Reconnect needed" ? "bi-arrow-repeat" :
+    status === "Not connected" ? "bi-circle" :
+    status === "Watch" ? "bi-exclamation-triangle" :
+    status === "Critical" ? "bi-x-octagon-fill" :
+    status === "Vacant" ? "bi-dash-circle" :
+    status === "Notice" ? "bi-bell-fill" :
+    status === "Open" ? "bi-folder2-open" :
+    status === "Assigned" ? "bi-person-check-fill" :
+    status === "Executed" ? "bi-check2-all" :
+    status === "Pending approval" ? "bi-hourglass-split" :
+    status === "No Access" ? "bi-slash-circle" :
+    status === "Viewer" ? "bi-eye" :
+    status === "Standard" ? "bi-person-check" :
+    status === "Admin" ? "bi-shield-fill-check" :
+    status === "Under Review" ? "bi-hourglass-split" :
+    status === "Inactive" ? "bi-pause-circle" :
+    status === "Suspended" ? "bi-x-octagon-fill" :
+    status === "Level 1" || status === "Level 2" || status === "Level 3" ? "bi-shield-fill-check" :
+    status === "Expiring soon" ? "bi-clock-history" :
+    status === "Needs Evidence" ? "bi-file-earmark-arrow-up-fill" :
+    status === "Opened" ? "bi-check2-all" :
+    status === "Bounced" ? "bi-x-circle-fill" :
+    status === "Muted" ? "bi-bell-slash" :
+    status === "Under Arbitration" ? "bi-bank2" :
+    status === "Won" || status === "Resolved" ? "bi-shield-check-fill" :
+    status === "Lost" || status === "Escalated" ? "bi-shield-x-fill" :
+    status === "Pending Customer" ? "bi-hourglass-split" :
+    status === "Urgent" ? "bi-fire" :
+    status === "Owner" ? "bi-star-fill" :
+    status === "Manager" ? "bi-person-badge" :
+    status === "Accountant" ? "bi-calculator" :
+    status === "Staff" ? "bi-person" :
+    status === "Custom role" ? "bi-sliders" :
+    status === "Pending invite" ? "bi-envelope-paper" :
+    status === "Revoked" ? "bi-slash-circle" :
+    status === "Enabled" ? "bi-shield-lock-fill" :
+    status === "Disabled" ? "bi-shield-slash" :
+    status === "Full" ? "bi-check-all" :
+    status === "Approve" ? "bi-check2-square" :
+    status === "Edit" ? "bi-pencil" :
+    status === "View" ? "bi-eye" :
+    status === "Create" ? "bi-plus-square" :
+    status === "None" ? "bi-slash-circle" :
+    status === "Other" ? "bi-circle-fill" : "bi-circle-fill";
   return (
-    <Badge tone={toneOf[status] ?? "muted"}>
-      <span className="me-1"><i className={`bi ${getIconClass()}`} /></span>
+    <Badge tone={toneOf[status] ?? "slate"}>
+      <i className={`bi ${icon} me-1`} />
       {status}
     </Badge>
   );
@@ -217,7 +197,7 @@ export function Spark({ data, color = "#12b76a", w = 110, h = 34, fill = true }:
 
 /* ============ KPI ============ */
 export function Kpi({ icon, iconBg, label, value, delta, deltaGood = true, spark, sparkColor, footer }: {
-  icon: ReactNode; iconBg: string; label: string; value: string; delta?: string; deltaGood?: boolean;
+  icon: string; iconBg: string; label: string; value: string; delta?: string; deltaGood?: boolean;
   spark?: number[]; sparkColor?: string; footer?: string;
 }) {
   return (
@@ -228,14 +208,15 @@ export function Kpi({ icon, iconBg, label, value, delta, deltaGood = true, spark
           <div className="pm-kpi-value">{value}</div>
         </div>
         <div className="pm-kpi-icon" style={{ background: iconBg }}>
-          {icon}
+          <i className={`bi ${icon}`} />
         </div>
       </div>
       <div className="d-flex align-items-end justify-content-between gap-2">
         <div>
           {delta && (
             <span className={`pm-delta ${delta.startsWith("-") ? "down" : deltaGood ? "up" : "flat"}`}>
-              {delta.startsWith("-") ? "▼" : "▲"} {delta}
+              <i className={`bi ${delta.startsWith("-") ? "bi-arrow-down-right" : "bi-arrow-up-right"}`} />
+              {delta}
             </span>
           )}
           {footer && <div className="mt-1" style={{ fontSize: "0.72rem", color: "var(--pm-muted)" }}>{footer}</div>}
@@ -248,7 +229,7 @@ export function Kpi({ icon, iconBg, label, value, delta, deltaGood = true, spark
 
 /* ============ Modal ============ */
 export function Modal({ open, onClose, title, subtitle, icon, size = "md", children, footer, hideClose }: {
-  open: boolean; onClose: () => void; title: ReactNode; subtitle?: ReactNode; icon?: ReactNode;
+  open: boolean; onClose: () => void; title: ReactNode; subtitle?: ReactNode; icon?: string;
   size?: "sm" | "md" | "lg" | "xl" | "full"; children: ReactNode; footer?: ReactNode; hideClose?: boolean;
 }) {
   if (!open) return null;
@@ -261,7 +242,7 @@ export function Modal({ open, onClose, title, subtitle, icon, size = "md", child
           <div className="modal-content">
             <div className="modal-header">
               <div className="d-flex align-items-center gap-2">
-                {icon && <span className="pm-kpi-icon" style={{ width: 34, height: 34, fontSize: "0.9rem", background: "var(--pm-green-soft)", color: "var(--pm-green-dark)" }}>{icon}</span>}
+                {icon && <span className="pm-kpi-icon" style={{ width: 34, height: 34, fontSize: "0.9rem", background: "var(--pm-green-soft)", color: "var(--pm-green-dark)" }}><i className={`bi ${icon}`} /></span>}
                 <div>
                   <h5 className="modal-title">{title}</h5>
                   {subtitle && <div style={{ fontSize: "0.74rem", color: "var(--pm-muted)" }}>{subtitle}</div>}
@@ -282,7 +263,7 @@ export function Modal({ open, onClose, title, subtitle, icon, size = "md", child
 
 /* ============ Drawer ============ */
 export function Drawer({ open, onClose, title, subtitle, children, footer, icon }: {
-  open: boolean; onClose: () => void; title: ReactNode; subtitle?: ReactNode; children: ReactNode; footer?: ReactNode; icon?: ReactNode;
+  open: boolean; onClose: () => void; title: ReactNode; subtitle?: ReactNode; children: ReactNode; footer?: ReactNode; icon?: string;
 }) {
   if (!open) return null;
   return (
@@ -290,7 +271,7 @@ export function Drawer({ open, onClose, title, subtitle, children, footer, icon 
       <div className="modal-backdrop fade show" onClick={onClose} />
       <aside className="pm-drawer" role="dialog" aria-modal="true">
         <div className="pm-drawer-head">
-          {icon && <span className="pm-kpi-icon" style={{ width: 36, height: 36, background: "var(--pm-green-soft)", color: "var(--pm-green-dark)" }}>{icon}</span>}
+          {icon && <span className="pm-kpi-icon" style={{ width: 36, height: 36, background: "var(--pm-green-soft)", color: "var(--pm-green-dark)" }}><i className={`bi ${icon}`} /></span>}
           <div className="flex-grow-1">
             <div className="fw-bold" style={{ fontSize: "0.95rem" }}>{title}</div>
             {subtitle && <div style={{ fontSize: "0.72rem", color: "var(--pm-muted)" }}>{subtitle}</div>}
@@ -305,7 +286,7 @@ export function Drawer({ open, onClose, title, subtitle, children, footer, icon 
 }
 
 /* ============ Wizard shell ============ */
-export interface WizStep { label: string; icon: ReactNode }
+export interface WizStep { label: string; icon: string }
 export function WizardShell({ steps, current, onStep, children, footer }: {
   steps: WizStep[]; current: number; onStep?: (i: number) => void; children: ReactNode; footer?: ReactNode;
 }) {
@@ -317,7 +298,7 @@ export function WizardShell({ steps, current, onStep, children, footer }: {
           <div key={s.label} className={`pm-wstep ${i === current ? "active" : i < current ? "done" : ""}`}>
             {i < steps.length - 1 && <div className="pm-wline" />}
             <div className="pm-wdot" role="button" onClick={() => onStep?.(i)} style={{ cursor: onStep ? "pointer" : "default" }}>
-              {i < current ? <i className="bi bi-check-circle-fill" /> : s.icon}
+              {i < current ? <i className="bi bi-check-lg" /> : <i className={`bi ${s.icon}`} style={{ fontSize: "0.85rem" }} />}
             </div>
             <div className="pm-wlabel">{s.label}</div>
           </div>
@@ -350,7 +331,7 @@ export function StockBar({ stock, reorder, max = 100 }: { stock: number; reorder
     <div style={{ minWidth: 90 }}>
       <div className="d-flex align-items-center justify-content-between" style={{ fontSize: "0.74rem" }}>
         <span className="fw-semibold">{stock}</span>
-        {out ? <Badge tone="danger">Out</Badge> : low ? <Badge tone="warning">Low</Badge> : null}
+        {out ? <Badge tone="red">Out</Badge> : low ? <Badge tone="amber">Low</Badge> : null}
       </div>
       <div className="progress" style={{ height: 5 }}>
         <div className="progress-bar" style={{ width: `${pct}%`, background: out ? "#f04438" : low ? "#f79009" : undefined }} />
@@ -359,10 +340,10 @@ export function StockBar({ stock, reorder, max = 100 }: { stock: number; reorder
   );
 }
 
-export function EmptyState({ icon, title, text, action }: { icon: ReactNode; title: string; text?: string; action?: ReactNode }) {
+export function EmptyState({ icon = "bi-box", title, text, action }: { icon?: string; title: string; text?: string; action?: ReactNode }) {
   return (
     <div className="pm-empty">
-      <div className="pm-empty-ic">{icon}</div>
+      <i className={`bi ${icon}`} />
       <h5>{title}</h5>
       {text && <p className="mb-3" style={{ fontSize: "0.82rem" }}>{text}</p>}
       {action}
@@ -376,7 +357,7 @@ export function ToastHost() {
   return (
     <div className="pm-toast-stack">
       {toasts.map((t) => (
-        <div key={t.id} className={`pm-toast pm-toast-${t.type}`} role="status">
+        <div key={t.id} className={`pm-toast ${t.type}`} role="status">
           <div className="flex-grow-1">
             {t.title && <div className="fw-bold" style={{ fontSize: "0.82rem" }}>{t.title}</div>}
             <div style={{ fontSize: "0.8rem", color: "#475467" }}>{t.msg}</div>

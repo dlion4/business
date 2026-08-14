@@ -28,10 +28,10 @@ const NAV: { group: string; items: NavItem[] }[] = [
   { group: "Run", items: [
     { icon: "bi-buildings", label: "Multi-Business Portfolio" },
     { icon: "bi-gear", label: "Business Profile & KYB" },
-    { icon: "bi-people", label: "Team & Roles" },
+    { icon: "bi-people", label: "Team & Roles", active: true },
     { icon: "bi-shield-exclamation", label: "Disputes & Support" },
     { icon: "bi-bell", label: "Notifications" },
-    { icon: "bi-database", label: "Data & Privacy", active: true },
+    { icon: "bi-database", label: "Data & Privacy" },
   ]},
 ];
 
@@ -66,7 +66,7 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
           <div className="pm-brand-logo">P</div>
           <div>
             <div className="pm-brand-name">PayMo Business</div>
-            <div className="pm-brand-sub">Page 9 · Data, Privacy &amp; Account Management</div>
+            <div className="pm-brand-sub">Page 6 · Team Management &amp; Roles</div>
           </div>
         </div>
         <div className="pm-nav-wrap">
@@ -103,10 +103,10 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
         <div className="pm-sidebar-foot">
           <div className="pm-upgrade">
             <div className="d-flex align-items-center gap-2 mb-1">
-              <i className="bi bi-shield-lock" style={{ color: "#ffd66b" }} />
-              <span className="fw-bold">Privacy-first defaults</span>
+              <i className="bi bi-people-fill" style={{ color: "#ffd66b" }} />
+              <span className="fw-bold">Least privilege, enforced</span>
             </div>
-            Consent &amp; retention controls are central — audit logs retained by default.
+            7 active members · 7 roles · maker-checker approvals · 7-year append-only audit trail.
           </div>
           <div className="pm-user-row" onClick={() => toast("Signed in as Wanjiku M. — owner of " + business + ".", "info", "Profile")}>
             <div className="pm-avatar" style={{ width: 30, height: 30, fontSize: "0.7rem" }}>WM</div>
@@ -135,16 +135,16 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
         <i className="bi bi-list" />
       </button>
       <div className="pm-crumb d-none d-md-block">
-        Run / <b>Data &amp; Privacy</b>
+        Run / <b>Team &amp; Roles</b>
       </div>
       <div className="ms-auto d-flex align-items-center gap-2">
         <div className="pm-search-box d-none d-lg-block">
           <i className="bi bi-search" />
           <input
-            id="data-search"
+            id="team-search"
             className="form-control form-control-sm"
             style={{ width: 240 }}
-            placeholder="Search data, exports, requests…"
+            placeholder="Search members, roles, permissions…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -159,7 +159,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
           {bellOpen && (
             <>
               <div className="pm-overlay" onClick={() => setBellOpen(false)} />
-              <div className="pm-dd-menu" style={{ width: 340, right: 0 }}>
+              <div className="pm-dd-menu" style={{ width: 330, right: 0 }}>
                 <div className="d-flex justify-content-between align-items-center px-2 py-2">
                   <span className="fw-bold" style={{ fontSize: "0.85rem" }}>Notifications</span>
                   <button type="button" className="btn btn-link btn-sm p-0" style={{ fontSize: "0.72rem" }} onClick={() => { markNotifsRead(); toast("All notifications marked as read", "info"); }}>
@@ -188,7 +188,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
         {/* Business switcher */}
         <div className="pm-dd">
           <button type="button" className="pm-bizchip" onClick={() => setBizOpen((v) => !v)}>
-            <span style={{ fontSize: "0.95rem" }}>🛍️</span>
+            <span style={{ fontSize: "0.95rem" }}>💻</span>
             <span className="d-none d-sm-inline">{business}</span>
             <i className="bi bi-chevron-down" style={{ fontSize: "0.65rem", color: "var(--pm-muted)" }} />
           </button>
@@ -206,13 +206,13 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
                     className="pm-dd-item"
                     onClick={() => {
                       setBizOpen(false);
-                      toast(`Data controls for ${b.name} will be shown once business switching is enabled here.`, "info", "PayMo demo");
+                      toast(`Team access for ${b.name} is managed from the Portfolio page.`, "info", "PayMo demo");
                     }}
                   >
                     <span>{b.emoji}</span>
                     <span className="flex-grow-1">
                       <span className="d-block fw-semibold" style={{ fontSize: "0.8rem" }}>{b.name}</span>
-                      <span style={{ fontSize: "0.66rem", color: "var(--pm-muted)" }}>{b.type}</span>
+                      <span style={{ fontSize: "0.66rem", color: "var(--pm-muted)" }}>Business entity</span>
                     </span>
                     {business === b.name && <i className="bi bi-check-lg text-primary" />}
                   </button>
@@ -232,7 +232,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
               <div className="pm-overlay" onClick={() => setAccOpen(false)} />
               <div className="pm-dd-menu" style={{ width: 210, right: 0 }}>
                 <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("activity"); }}><i className="bi bi-clock-history" /> Activity log</button>
-                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("requestHistory"); }}><i className="bi bi-list-check" /> Data requests</button>
+                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("sessions"); }}><i className="bi bi-device-laptop" /> Active sessions</button>
                 <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("help"); }}><i className="bi bi-question-circle" /> Help &amp; shortcuts</button>
                 <hr />
                 <button type="button" className="pm-dd-item danger" onClick={() => { setAccOpen(false); toast("Signed out of the demo session.", "info"); }}><i className="bi bi-box-arrow-right" /> Sign out</button>
@@ -249,20 +249,20 @@ export function QuickBar() {
   const { openModal } = useStore();
   return (
     <nav className="pm-quickbar" aria-label="Quick actions">
-      <button type="button" className="primary" onClick={() => openModal("exportWizard")}>
-        <i className="bi bi-download" /> Export Data
+      <button type="button" className="primary" onClick={() => openModal("inviteWizard")}>
+        <i className="bi bi-person-plus" /> Invite Member
       </button>
-      <button type="button" onClick={() => openModal("deletionWizard")}>
-        <i className="bi bi-trash" /> Deletion Request
+      <button type="button" onClick={() => openModal("roleWizard")}>
+        <i className="bi bi-person-gear" /> New Role
       </button>
-      <button type="button" onClick={() => openModal("consentManager")}>
-        <i className="bi bi-toggle-on" /> Consent Manager
+      <button type="button" onClick={() => openModal("approvalWizard")}>
+        <i className="bi bi-check2-square" /> Approval Rule
       </button>
-      <button type="button" onClick={() => openModal("accountClosure")}>
-        <i className="bi bi-door-closed" /> Account Closure
+      <button type="button" onClick={() => openModal("twofaWizard")}>
+        <i className="bi bi-shield-lock" /> Set Up 2FA
       </button>
-      <button type="button" onClick={() => openModal("auditLog")}>
-        <i className="bi bi-clipboard-data" /> Audit Log
+      <button type="button" onClick={() => openModal("bulkWizard")}>
+        <i className="bi bi-people" /> Bulk Invite
       </button>
       <button type="button" onClick={() => openModal("help")}>
         <i className="bi bi-question-circle" /> Help

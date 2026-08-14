@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useStore } from "./store";
-import { BUSINESSES } from "./data";
+
+const BUSINESSES = [
+  { name: "TechSolutions Ltd", emoji: "💻", type: "Technology Services", current: true },
+  { name: "TS Retail Ltd", emoji: "🛍️", type: "Retail & E-commerce", current: false },
+  { name: "Kilimani Rentals", emoji: "🏠", type: "Rental Property", current: false },
+];
 
 interface NavItem { icon: string; label: string; badge?: string; active?: boolean }
 const NAV: { group: string; items: NavItem[] }[] = [
@@ -27,11 +32,11 @@ const NAV: { group: string; items: NavItem[] }[] = [
   ]},
   { group: "Run", items: [
     { icon: "bi-buildings", label: "Multi-Business Portfolio" },
-    { icon: "bi-gear", label: "Business Profile & KYB" },
+    { icon: "bi-gear", label: "Business Profile & KYB", active: true },
     { icon: "bi-people", label: "Team & Roles" },
     { icon: "bi-shield-exclamation", label: "Disputes & Support" },
     { icon: "bi-bell", label: "Notifications" },
-    { icon: "bi-database", label: "Data & Privacy", active: true },
+    { icon: "bi-database", label: "Data & Privacy" },
   ]},
 ];
 
@@ -66,7 +71,7 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
           <div className="pm-brand-logo">P</div>
           <div>
             <div className="pm-brand-name">PayMo Business</div>
-            <div className="pm-brand-sub">Page 9 · Data, Privacy &amp; Account Management</div>
+            <div className="pm-brand-sub">Page 5 · Business Profile &amp; KYB</div>
           </div>
         </div>
         <div className="pm-nav-wrap">
@@ -103,10 +108,10 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
         <div className="pm-sidebar-foot">
           <div className="pm-upgrade">
             <div className="d-flex align-items-center gap-2 mb-1">
-              <i className="bi bi-shield-lock" style={{ color: "#ffd66b" }} />
-              <span className="fw-bold">Privacy-first defaults</span>
+              <i className="bi bi-shield-fill-check" style={{ color: "#ffd66b" }} />
+              <span className="fw-bold">Level 2 KYB verified</span>
             </div>
-            Consent &amp; retention controls are central — audit logs retained by default.
+            KES 5M/day transaction limit unlocked · CR12 expires in 34 days — renew soon.
           </div>
           <div className="pm-user-row" onClick={() => toast("Signed in as Wanjiku M. — owner of " + business + ".", "info", "Profile")}>
             <div className="pm-avatar" style={{ width: 30, height: 30, fontSize: "0.7rem" }}>WM</div>
@@ -123,7 +128,7 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
 }
 
 export function Topbar({ onMenu }: { onMenu: () => void }) {
-  const { business, notifications, markNotifsRead, dismissNotif, openModal, toast, searchQuery, setSearchQuery } = useStore();
+  const { business, setBusiness, notifications, markNotifsRead, dismissNotif, openModal, toast, searchQuery, setSearchQuery } = useStore();
   const [bellOpen, setBellOpen] = useState(false);
   const [bizOpen, setBizOpen] = useState(false);
   const [accOpen, setAccOpen] = useState(false);
@@ -135,16 +140,16 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
         <i className="bi bi-list" />
       </button>
       <div className="pm-crumb d-none d-md-block">
-        Run / <b>Data &amp; Privacy</b>
+        Run / <b>Business Profile &amp; KYB</b>
       </div>
       <div className="ms-auto d-flex align-items-center gap-2">
         <div className="pm-search-box d-none d-lg-block">
           <i className="bi bi-search" />
           <input
-            id="data-search"
+            id="pf-search"
             className="form-control form-control-sm"
             style={{ width: 240 }}
-            placeholder="Search data, exports, requests…"
+            placeholder="Search profile, KYB docs, businesses…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -159,7 +164,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
           {bellOpen && (
             <>
               <div className="pm-overlay" onClick={() => setBellOpen(false)} />
-              <div className="pm-dd-menu" style={{ width: 340, right: 0 }}>
+              <div className="pm-dd-menu" style={{ width: 330, right: 0 }}>
                 <div className="d-flex justify-content-between align-items-center px-2 py-2">
                   <span className="fw-bold" style={{ fontSize: "0.85rem" }}>Notifications</span>
                   <button type="button" className="btn btn-link btn-sm p-0" style={{ fontSize: "0.72rem" }} onClick={() => { markNotifsRead(); toast("All notifications marked as read", "info"); }}>
@@ -188,7 +193,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
         {/* Business switcher */}
         <div className="pm-dd">
           <button type="button" className="pm-bizchip" onClick={() => setBizOpen((v) => !v)}>
-            <span style={{ fontSize: "0.95rem" }}>🛍️</span>
+            <span style={{ fontSize: "0.95rem" }}>💻</span>
             <span className="d-none d-sm-inline">{business}</span>
             <i className="bi bi-chevron-down" style={{ fontSize: "0.65rem", color: "var(--pm-muted)" }} />
           </button>
@@ -206,7 +211,9 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
                     className="pm-dd-item"
                     onClick={() => {
                       setBizOpen(false);
-                      toast(`Data controls for ${b.name} will be shown once business switching is enabled here.`, "info", "PayMo demo");
+                      if (business === b.name) return;
+                      setBusiness(b.name);
+                      toast(`Profile, KYB docs and limits now scoped to ${b.name}.`, "info", "Business switched");
                     }}
                   >
                     <span>{b.emoji}</span>
@@ -232,7 +239,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
               <div className="pm-overlay" onClick={() => setAccOpen(false)} />
               <div className="pm-dd-menu" style={{ width: 210, right: 0 }}>
                 <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("activity"); }}><i className="bi bi-clock-history" /> Activity log</button>
-                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("requestHistory"); }}><i className="bi bi-list-check" /> Data requests</button>
+                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("kybCenter"); }}><i className="bi bi-shield-check" /> KYB centre</button>
                 <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("help"); }}><i className="bi bi-question-circle" /> Help &amp; shortcuts</button>
                 <hr />
                 <button type="button" className="pm-dd-item danger" onClick={() => { setAccOpen(false); toast("Signed out of the demo session.", "info"); }}><i className="bi bi-box-arrow-right" /> Sign out</button>
@@ -249,20 +256,20 @@ export function QuickBar() {
   const { openModal } = useStore();
   return (
     <nav className="pm-quickbar" aria-label="Quick actions">
-      <button type="button" className="primary" onClick={() => openModal("exportWizard")}>
-        <i className="bi bi-download" /> Export Data
+      <button type="button" className="primary" onClick={() => openModal("editProfile")}>
+        <i className="bi bi-pencil-square" /> Edit Profile
       </button>
-      <button type="button" onClick={() => openModal("deletionWizard")}>
-        <i className="bi bi-trash" /> Deletion Request
+      <button type="button" onClick={() => openModal("uploadDoc")}>
+        <i className="bi bi-file-earmark-arrow-up" /> Upload Document
       </button>
-      <button type="button" onClick={() => openModal("consentManager")}>
-        <i className="bi bi-toggle-on" /> Consent Manager
+      <button type="button" onClick={() => openModal("newBusiness")}>
+        <i className="bi bi-plus-lg" /> New Business
       </button>
-      <button type="button" onClick={() => openModal("accountClosure")}>
-        <i className="bi bi-door-closed" /> Account Closure
+      <button type="button" onClick={() => openModal("sectorPresets")}>
+        <i className="bi bi-magic" /> Sector Preset
       </button>
-      <button type="button" onClick={() => openModal("auditLog")}>
-        <i className="bi bi-clipboard-data" /> Audit Log
+      <button type="button" onClick={() => openModal("taxReg")}>
+        <i className="bi bi-receipt" /> Tax Registration
       </button>
       <button type="button" onClick={() => openModal("help")}>
         <i className="bi bi-question-circle" /> Help

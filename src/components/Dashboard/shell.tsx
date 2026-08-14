@@ -5,6 +5,7 @@ import { BUSINESSES } from "./data";
 interface NavItem { icon: string; label: string; badge?: string; active?: boolean }
 const NAV: { group: string; items: NavItem[] }[] = [
   { group: "Money In", items: [
+    { icon: "bi-grid-1x2", label: "Dashboard", active: true },
     { icon: "bi-cash-coin", label: "Get Paid", badge: "12 due" },
     { icon: "bi-people", label: "Customers & CRM" },
   ]},
@@ -31,7 +32,7 @@ const NAV: { group: string; items: NavItem[] }[] = [
     { icon: "bi-people", label: "Team & Roles" },
     { icon: "bi-shield-exclamation", label: "Disputes & Support" },
     { icon: "bi-bell", label: "Notifications" },
-    { icon: "bi-database", label: "Data & Privacy", active: true },
+    { icon: "bi-database", label: "Data & Privacy" },
   ]},
 ];
 
@@ -66,7 +67,7 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
           <div className="pm-brand-logo">P</div>
           <div>
             <div className="pm-brand-name">PayMo Business</div>
-            <div className="pm-brand-sub">Page 9 · Data, Privacy &amp; Account Management</div>
+            <div className="pm-brand-sub">Page 0 · Dashboard Overview</div>
           </div>
         </div>
         <div className="pm-nav-wrap">
@@ -103,10 +104,10 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
         <div className="pm-sidebar-foot">
           <div className="pm-upgrade">
             <div className="d-flex align-items-center gap-2 mb-1">
-              <i className="bi bi-shield-lock" style={{ color: "#ffd66b" }} />
-              <span className="fw-bold">Privacy-first defaults</span>
+              <i className="bi bi-lightning-charge" style={{ color: "#ffd66b" }} />
+              <span className="fw-bold">Decision engine</span>
             </div>
-            Consent &amp; retention controls are central — audit logs retained by default.
+            Every card is tappable and jumps to its module — the 3-minute morning briefing.
           </div>
           <div className="pm-user-row" onClick={() => toast("Signed in as Wanjiku M. — owner of " + business + ".", "info", "Profile")}>
             <div className="pm-avatar" style={{ width: 30, height: 30, fontSize: "0.7rem" }}>WM</div>
@@ -123,7 +124,7 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
 }
 
 export function Topbar({ onMenu }: { onMenu: () => void }) {
-  const { business, notifications, markNotifsRead, dismissNotif, openModal, toast, searchQuery, setSearchQuery } = useStore();
+  const { business, setBusiness, notifications, markNotifsRead, dismissNotif, openModal, toast, searchQuery, setSearchQuery } = useStore();
   const [bellOpen, setBellOpen] = useState(false);
   const [bizOpen, setBizOpen] = useState(false);
   const [accOpen, setAccOpen] = useState(false);
@@ -135,16 +136,16 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
         <i className="bi bi-list" />
       </button>
       <div className="pm-crumb d-none d-md-block">
-        Run / <b>Data &amp; Privacy</b>
+        Home / <b>Dashboard</b>
       </div>
       <div className="ms-auto d-flex align-items-center gap-2">
         <div className="pm-search-box d-none d-lg-block">
           <i className="bi bi-search" />
           <input
-            id="data-search"
+            id="dash-search"
             className="form-control form-control-sm"
             style={{ width: 240 }}
-            placeholder="Search data, exports, requests…"
+            placeholder="Search invoices, products, reports…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -159,7 +160,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
           {bellOpen && (
             <>
               <div className="pm-overlay" onClick={() => setBellOpen(false)} />
-              <div className="pm-dd-menu" style={{ width: 340, right: 0 }}>
+              <div className="pm-dd-menu" style={{ width: 330, right: 0 }}>
                 <div className="d-flex justify-content-between align-items-center px-2 py-2">
                   <span className="fw-bold" style={{ fontSize: "0.85rem" }}>Notifications</span>
                   <button type="button" className="btn btn-link btn-sm p-0" style={{ fontSize: "0.72rem" }} onClick={() => { markNotifsRead(); toast("All notifications marked as read", "info"); }}>
@@ -206,7 +207,9 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
                     className="pm-dd-item"
                     onClick={() => {
                       setBizOpen(false);
-                      toast(`Data controls for ${b.name} will be shown once business switching is enabled here.`, "info", "PayMo demo");
+                      if (business === b.name) return;
+                      setBusiness(b.name);
+                      toast(`Context switched to ${b.name}. Every card now reads this entity's ledger.`, "info", "Business switched");
                     }}
                   >
                     <span>{b.emoji}</span>
@@ -231,9 +234,8 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
             <>
               <div className="pm-overlay" onClick={() => setAccOpen(false)} />
               <div className="pm-dd-menu" style={{ width: 210, right: 0 }}>
-                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("activity"); }}><i className="bi bi-clock-history" /> Activity log</button>
-                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("requestHistory"); }}><i className="bi bi-list-check" /> Data requests</button>
                 <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("help"); }}><i className="bi bi-question-circle" /> Help &amp; shortcuts</button>
+                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("moduleList"); }}><i className="bi bi-grid" /> All modules</button>
                 <hr />
                 <button type="button" className="pm-dd-item danger" onClick={() => { setAccOpen(false); toast("Signed out of the demo session.", "info"); }}><i className="bi bi-box-arrow-right" /> Sign out</button>
               </div>
@@ -249,20 +251,23 @@ export function QuickBar() {
   const { openModal } = useStore();
   return (
     <nav className="pm-quickbar" aria-label="Quick actions">
-      <button type="button" className="primary" onClick={() => openModal("exportWizard")}>
-        <i className="bi bi-download" /> Export Data
+      <button type="button" className="primary" onClick={() => openModal("quickInvoice")}>
+        <i className="bi bi-plus-lg" /> New Invoice
       </button>
-      <button type="button" onClick={() => openModal("deletionWizard")}>
-        <i className="bi bi-trash" /> Deletion Request
+      <button type="button" onClick={() => openModal("recordPayment")}>
+        <i className="bi bi-cash-coin" /> Record Payment
       </button>
-      <button type="button" onClick={() => openModal("consentManager")}>
-        <i className="bi bi-toggle-on" /> Consent Manager
+      <button type="button" onClick={() => openModal("quickOrder")}>
+        <i className="bi bi-bag-plus" /> New Order
       </button>
-      <button type="button" onClick={() => openModal("accountClosure")}>
-        <i className="bi bi-door-closed" /> Account Closure
+      <button type="button" onClick={() => openModal("addProduct")}>
+        <i className="bi bi-box-seam" /> Add Product
       </button>
-      <button type="button" onClick={() => openModal("auditLog")}>
-        <i className="bi bi-clipboard-data" /> Audit Log
+      <button type="button" onClick={() => openModal("dispatchOrder")}>
+        <i className="bi bi-truck" /> Dispatch
+      </button>
+      <button type="button" onClick={() => openModal("exportData")}>
+        <i className="bi bi-download" /> Export
       </button>
       <button type="button" onClick={() => openModal("help")}>
         <i className="bi bi-question-circle" /> Help

@@ -23,7 +23,7 @@ const NAV: { group: string; items: NavItem[] }[] = [
     { icon: "bi-lightning-charge", label: "Funding & Credit" },
     { icon: "bi-shield-check", label: "Insurance & Protection" },
     { icon: "bi-megaphone", label: "Marketing & Growth" },
-    { icon: "bi-puzzle", label: "Apps & Integrations" },
+    { icon: "bi-puzzle", label: "Apps & Integrations", active: true },
   ]},
   { group: "Run", items: [
     { icon: "bi-buildings", label: "Multi-Business Portfolio" },
@@ -31,7 +31,7 @@ const NAV: { group: string; items: NavItem[] }[] = [
     { icon: "bi-people", label: "Team & Roles" },
     { icon: "bi-shield-exclamation", label: "Disputes & Support" },
     { icon: "bi-bell", label: "Notifications" },
-    { icon: "bi-database", label: "Data & Privacy", active: true },
+    { icon: "bi-database", label: "Data & Privacy" },
   ]},
 ];
 
@@ -66,7 +66,7 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
           <div className="pm-brand-logo">P</div>
           <div>
             <div className="pm-brand-name">PayMo Business</div>
-            <div className="pm-brand-sub">Page 9 · Data, Privacy &amp; Account Management</div>
+            <div className="pm-brand-sub">Page 13 · Apps &amp; Integrations</div>
           </div>
         </div>
         <div className="pm-nav-wrap">
@@ -103,10 +103,10 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
         <div className="pm-sidebar-foot">
           <div className="pm-upgrade">
             <div className="d-flex align-items-center gap-2 mb-1">
-              <i className="bi bi-shield-lock" style={{ color: "#ffd66b" }} />
-              <span className="fw-bold">Privacy-first defaults</span>
+              <i className="bi bi-puzzle" style={{ color: "#ffd66b" }} />
+              <span className="fw-bold">Everything talks to PayMo</span>
             </div>
-            Consent &amp; retention controls are central — audit logs retained by default.
+            Daraja, eTIMS, Zapier &amp; webhooks — 23 apps connected, sync failures auto-retried.
           </div>
           <div className="pm-user-row" onClick={() => toast("Signed in as Wanjiku M. — owner of " + business + ".", "info", "Profile")}>
             <div className="pm-avatar" style={{ width: 30, height: 30, fontSize: "0.7rem" }}>WM</div>
@@ -123,7 +123,7 @@ export function Sidebar({ open, onClose, onNavigate }: { open: boolean; onClose:
 }
 
 export function Topbar({ onMenu }: { onMenu: () => void }) {
-  const { business, notifications, markNotifsRead, dismissNotif, openModal, toast, searchQuery, setSearchQuery } = useStore();
+  const { business, setBusiness, notifications, markNotifsRead, dismissNotif, openModal, toast, searchQuery, setSearchQuery } = useStore();
   const [bellOpen, setBellOpen] = useState(false);
   const [bizOpen, setBizOpen] = useState(false);
   const [accOpen, setAccOpen] = useState(false);
@@ -135,16 +135,16 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
         <i className="bi bi-list" />
       </button>
       <div className="pm-crumb d-none d-md-block">
-        Run / <b>Data &amp; Privacy</b>
+        Grow / <b>Apps &amp; Integrations</b>
       </div>
       <div className="ms-auto d-flex align-items-center gap-2">
         <div className="pm-search-box d-none d-lg-block">
           <i className="bi bi-search" />
           <input
-            id="data-search"
+            id="apps-search"
             className="form-control form-control-sm"
             style={{ width: 240 }}
-            placeholder="Search data, exports, requests…"
+            placeholder="Search apps, webhooks, APIs…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -159,7 +159,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
           {bellOpen && (
             <>
               <div className="pm-overlay" onClick={() => setBellOpen(false)} />
-              <div className="pm-dd-menu" style={{ width: 340, right: 0 }}>
+              <div className="pm-dd-menu" style={{ width: 330, right: 0 }}>
                 <div className="d-flex justify-content-between align-items-center px-2 py-2">
                   <span className="fw-bold" style={{ fontSize: "0.85rem" }}>Notifications</span>
                   <button type="button" className="btn btn-link btn-sm p-0" style={{ fontSize: "0.72rem" }} onClick={() => { markNotifsRead(); toast("All notifications marked as read", "info"); }}>
@@ -206,7 +206,9 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
                     className="pm-dd-item"
                     onClick={() => {
                       setBizOpen(false);
-                      toast(`Data controls for ${b.name} will be shown once business switching is enabled here.`, "info", "PayMo demo");
+                      if (business === b.name) return;
+                      setBusiness(b.name);
+                      toast(`Context switched to ${b.name}. Connected apps and webhooks now scoped to this entity.`, "info", "Business switched");
                     }}
                   >
                     <span>{b.emoji}</span>
@@ -232,7 +234,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
               <div className="pm-overlay" onClick={() => setAccOpen(false)} />
               <div className="pm-dd-menu" style={{ width: 210, right: 0 }}>
                 <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("activity"); }}><i className="bi bi-clock-history" /> Activity log</button>
-                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("requestHistory"); }}><i className="bi bi-list-check" /> Data requests</button>
+                <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("apiDocs"); }}><i className="bi bi-file-code" /> API docs</button>
                 <button type="button" className="pm-dd-item" onClick={() => { setAccOpen(false); openModal("help"); }}><i className="bi bi-question-circle" /> Help &amp; shortcuts</button>
                 <hr />
                 <button type="button" className="pm-dd-item danger" onClick={() => { setAccOpen(false); toast("Signed out of the demo session.", "info"); }}><i className="bi bi-box-arrow-right" /> Sign out</button>
@@ -249,20 +251,20 @@ export function QuickBar() {
   const { openModal } = useStore();
   return (
     <nav className="pm-quickbar" aria-label="Quick actions">
-      <button type="button" className="primary" onClick={() => openModal("exportWizard")}>
-        <i className="bi bi-download" /> Export Data
+      <button type="button" className="primary" onClick={() => openModal("installWizard")}>
+        <i className="bi bi-plus-lg" /> Install App
       </button>
-      <button type="button" onClick={() => openModal("deletionWizard")}>
-        <i className="bi bi-trash" /> Deletion Request
+      <button type="button" onClick={() => openModal("webhookWizard")}>
+        <i className="bi bi-hdd-network" /> New Webhook
       </button>
-      <button type="button" onClick={() => openModal("consentManager")}>
-        <i className="bi bi-toggle-on" /> Consent Manager
+      <button type="button" onClick={() => openModal("apiKeyWizard")}>
+        <i className="bi bi-key" /> API Key
       </button>
-      <button type="button" onClick={() => openModal("accountClosure")}>
-        <i className="bi bi-door-closed" /> Account Closure
+      <button type="button" onClick={() => openModal("automationWizard")}>
+        <i className="bi bi-magic" /> Automation
       </button>
-      <button type="button" onClick={() => openModal("auditLog")}>
-        <i className="bi bi-clipboard-data" /> Audit Log
+      <button type="button" onClick={() => openModal("marketplace")}>
+        <i className="bi bi-shop" /> Marketplace
       </button>
       <button type="button" onClick={() => openModal("help")}>
         <i className="bi bi-question-circle" /> Help

@@ -2,41 +2,25 @@ import { useEffect, useState } from "react";
 import { StoreProvider, useStore } from "./store";
 import { QuickBar, Sidebar, Topbar } from "./shell";
 import { ToastHost } from "./ui";
-import { BusinessProfileSection, PageHeader, PortfolioSection, WizardsBanner } from "./profileSections";
+import { BeneficiariesSection, ClaimsSection, CoverCommandCenter, PageHeader, PoliciesSection, WizardsBanner } from "./insuranceSections";
 import {
-  AddDirectorModal, EditProfileWizardModal, NewBusinessWizardModal, NewRentalWizardModal,
-  SectorPresetsModal, UploadDocWizardModal,
-} from "./profileWizards";
-import {
-  ActivityDrawer, BusinessDrawer, ComplianceLevelsModal, DeactivateConfirmModal,
-  DeleteBusinessConfirmModal, ExportPackModal, FolderManagerModal, HelpModal,
-  KybCenterModal, ReactivateConfirmModal, ShareProfileModal, TaxRegModal,
-} from "./profileDialogs";
+  ActivateCyberModal, ActivityDrawer, BeneficiariesModal, ClaimDetailModal, ClaimModal, HelpModal,
+  PolicyDetailDrawer, PolicyModal, RenewalsModal,
+} from "./insuranceDialogs";
 
-/* ---------- modal registry — 18 functional modals ---------- */
+/* ---------- modal registry ---------- */
 function ModalHost() {
   const { modal, closeModal } = useStore();
   if (!modal) return null;
   const props = { payload: modal.payload, onClose: closeModal };
   switch (modal.name) {
-    /* wizards */
-    case "editProfile": return <EditProfileWizardModal {...props} />;
-    case "uploadDoc": return <UploadDocWizardModal {...props} />;
-    case "newBusiness": return <NewBusinessWizardModal {...props} />;
-    case "newRental": return <NewRentalWizardModal {...props} />;
-    case "sectorPresets": return <SectorPresetsModal {...props} />;
-    case "addDirector": return <AddDirectorModal {...props} />;
-    /* dialogs & drawers */
-    case "kybCenter": return <KybCenterModal {...props} />;
-    case "businessDrawer": return <BusinessDrawer {...props} />;
-    case "taxReg": return <TaxRegModal {...props} />;
-    case "folderManager": return <FolderManagerModal {...props} />;
-    case "deactivate": return <DeactivateConfirmModal {...props} />;
-    case "reactivate": return <ReactivateConfirmModal {...props} />;
-    case "deleteBusiness": return <DeleteBusinessConfirmModal {...props} />;
-    case "share": return <ShareProfileModal {...props} />;
-    case "complianceLevels": return <ComplianceLevelsModal {...props} />;
-    case "exportPack": return <ExportPackModal {...props} />;
+    case "policyDetail": return <PolicyDetailDrawer {...props} />;
+    case "policy": return <PolicyModal {...props} />;
+    case "claim": return <ClaimModal {...props} />;
+    case "claimDetail": return <ClaimDetailModal {...props} />;
+    case "renewals": return <RenewalsModal {...props} />;
+    case "beneficiaries": return <BeneficiariesModal {...props} />;
+    case "activateCyber": return <ActivateCyberModal {...props} />;
     case "help": return <HelpModal {...props} />;
     case "activity": return <ActivityDrawer {...props} />;
     default: return null;
@@ -52,7 +36,7 @@ function Page({ onNavigate }: { onNavigate?: (p: string) => void }) {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") { closeModal(); return; }
       if (e.key === "/" && !modal) {
-        const el = document.getElementById("pf-search") as HTMLInputElement | null;
+        const el = document.getElementById("ins-search") as HTMLInputElement | null;
         if (el) { e.preventDefault(); el.focus(); el.scrollIntoView({ behavior: "smooth", block: "center" }); }
         return;
       }
@@ -77,22 +61,24 @@ function Page({ onNavigate }: { onNavigate?: (p: string) => void }) {
         <Topbar onMenu={() => setSideOpen(true)} />
         <main className="pm-content">
           <PageHeader />
-          <BusinessProfileSection />
-          <PortfolioSection />
+          <CoverCommandCenter />
+          <PoliciesSection />
+          <ClaimsSection />
+          <BeneficiariesSection />
           <WizardsBanner />
 
           <footer className="pm-footer mt-4 rounded-3 d-flex flex-wrap align-items-center gap-3" style={{ boxShadow: "var(--pm-shadow)" }}>
             <div className="flex-grow-1">
-              <div className="fw-bold" style={{ fontSize: "0.84rem" }}>PayMo Business — Page 5: Business Profile &amp; KYB</div>
+              <div className="fw-bold" style={{ fontSize: "0.84rem" }}>PayMo Business — Page 11: Insurance &amp; Protection</div>
               <div className="pm-prod-meta">
-                The control room · KYB compliance · portfolio management · Kenya-first (KRA/CBK) rails
+                The protection engine · 5 underwriters · WIBA compliant · Kenya-first rails
               </div>
             </div>
             <div className="d-flex gap-2 flex-wrap">
-              <span className="badge-soft green"><i className="bi bi-shield-fill-check me-1" />Level 2 KYB</span>
-              <span className="badge-soft blue"><i className="bi bi-buildings me-1" />7 businesses</span>
-              <span className="badge-soft amber"><i className="bi bi-people me-1" />3 directors</span>
-              <span className="badge-soft violet"><i className="bi bi-magic me-1" />Sector presets</span>
+              <span className="badge-soft green"><i className="bi bi-shield-fill-check me-1" />KES 24.5M cover</span>
+              <span className="badge-soft blue"><i className="bi bi-bank me-1" />6 policies</span>
+              <span className="badge-soft amber"><i className="bi bi-shield-exclamation me-1" />1 claim in review</span>
+              <span className="badge-soft violet"><i className="bi bi-people me-1" />3 beneficiaries</span>
             </div>
           </footer>
         </main>

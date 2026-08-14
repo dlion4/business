@@ -44,10 +44,14 @@ export const NAVIGATION: NavZone = {
   "🚀 Grow": [
     { id: "insurance", label: "Insurance & Protection", iconName: "Sparkles", active: false, kind: "module" },
     { id: "marketing", label: "Marketing & Growth", iconName: "Zap", active: false, kind: "module" },
-    { id: "integrations", label: "Apps & Integrations", iconName: "LayoutGrid", active: false, kind: "module" },
+    { id: "integrations", label: "Apps & Integrations", iconName: "Puzzle", active: false, kind: "module" },
   ],
   "⚙️ Run": [
     { id: "portfolio", label: "Multi-Business", iconName: "Building2", active: false, kind: "biz" },
-    { id: "settings", label: "Settings & Security", iconName: "Settings", active: false, kind: "module" },
+    { id: "profile", label: "Business Profile", iconName: "Building2", active: false, kind: "module" },
+    { id: "team", label: "Team & Roles", iconName: "Users", active: false, kind: "module" },
+    { id: "disputes", label: "Disputes & Support", iconName: "Shield", active: false, kind: "module" },
+    { id: "notifications", label: "Notifications", iconName: "Bell", active: false, kind: "module" },
+    { id: "data", label: "Data & Privacy", iconName: "Database", active: false, kind: "module" },
   ],
 };

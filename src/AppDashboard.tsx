@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { Menu, X, ChevronDown, Search, Bell, User, Settings, Building2, LogOut, Sparkles, Wallet, LayoutGrid, Zap, Package, Megaphone } from "lucide-react";
+import { Menu, X, ChevronDown, Search, Bell, User, Settings, Building2, LogOut, Sparkles, Wallet, LayoutGrid, Zap, Package, Megaphone, Users, Shield, Database, Puzzle } from "lucide-react";
 import { Chart, LineController, LineElement, PointElement, LinearScale, CategoryScale, Filler, BarController, BarElement, DoughnutController, ArcElement, Tooltip, Legend } from "chart.js";
 import { StoreProvider, useStore } from "./components/Dashboard/store";
 import { ToastHost, Badge, Modal, Section, Spark } from "./components/Dashboard/ui";
 import { ACTIVITY_FEED, BUSINESSES, CASH_SPLIT, EXPENSES_30D, EXPENSES_90D, fmtK, HEALTH_SCORE, MODULES, REVENUE_30D, REVENUE_90D } from "./dataDashboard";
 import { cls } from "./lib";
 import { Avatar } from "./components/Getpaid/ui";
-import { NAVIGATION, ZONES, type NavItem } from "./lib/navigation";
+import { NAVIGATION, ZONES, type NavZone } from "./lib/navigation";
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Filler, BarController, BarElement, DoughnutController, ArcElement, Tooltip, Legend);
 
-type NavPage = "dashboard" | "getpaid" | "paysuppliers" | "cash" | "books" | "crm" | "productstore" | "inventory" | "marketing";
+type NavPage = "dashboard" | "getpaid" | "paysuppliers" | "cash" | "books" | "crm" | "productstore" | "inventory" | "marketing" | "profile" | "team" | "disputes" | "notifications" | "data" | "integrations" | "portfolio" | "funding" | "insurance";
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
   LayoutGrid,
@@ -22,6 +22,11 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
   Settings,
   Package,
   Megaphone,
+  Users,
+  Shield,
+  Bell,
+  Database,
+  Puzzle,
 };
 
 /* ==================================================================
@@ -744,7 +749,7 @@ function ModalHost() {
 /* ==================================================================
    PAGE
 ================================================================== */
-function PageContent({ onNavigate }: { onNavigate?: (p: NavPage) => void }) {
+function PageContent() {
   const { modal, closeModal } = useStore();
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -784,8 +789,8 @@ export default function AppDashboard({ onNavigate }: { onNavigate?: (p: NavPage)
   );
 }
 
-function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void; currentPage?: NavPage }) {
-  const { business, setBusiness, notifications, markNotifsRead, dismissNotif, toast, toasts, dismissToast } = useStore();
+function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage, anchor?: string) => void; currentPage?: NavPage }) {
+  const { business, setBusiness, notifications, markNotifsRead, dismissNotif, toast } = useStore();
   const [sideOpen, setSideOpen] = useState(false);
   const [bizSwitch, setBizSwitch] = useState(false);
   const [bellOpen, setBellOpen] = useState(false);
@@ -856,7 +861,16 @@ function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void;
                     else if (it.id === "productstore") onNavigate?.("productstore");
                     else if (it.id === "inventory") onNavigate?.("inventory");
                     else if (it.id === "marketing") onNavigate?.("marketing");
-                    else toast({ msg: `${it.label} coming soon`, type: "info" });
+                    else if (it.id === "integrations") onNavigate?.("integrations");
+                    else if (it.id === "portfolio") onNavigate?.("portfolio");
+                    else if (it.id === "profile") onNavigate?.("profile");
+                    else if (it.id === "team") onNavigate?.("team");
+                    else if (it.id === "disputes") onNavigate?.("disputes");
+                    else if (it.id === "notifications") onNavigate?.("notifications");
+                    else if (it.id === "data") onNavigate?.("data");
+                    else if (it.id === "funding") onNavigate?.("funding");
+                    else if (it.id === "insurance") onNavigate?.("insurance");
+                    else toast(`${it.label} coming soon`, "info");
                   }}
                 >
                   <span className="pm-nav-ic">{getIconComponent(it.iconName)}</span>
@@ -871,7 +885,7 @@ function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void;
           <div className="pm-upgrade">
             <Sparkles size={14} /> <span>PayMo Pro — 14 days left in trial</span>
           </div>
-          <button className="pm-nav-item" onClick={() => toast({ msg: "Help centre coming soon", type: "info" })}>
+          <button className="pm-nav-item" onClick={() => toast("Help centre coming soon", "info")}>
             <span className="pm-nav-ic"><Zap size={16} /></span> Help & Support
           </button>
         </div>
@@ -905,7 +919,7 @@ function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void;
                   <div className="pm-pop pm-notif-pop">
                     <div className="pm-pop-head">
                       <b>Notifications</b>
-                      <button className="pm-link-btn pm-fs-12" onClick={() => { markNotifsRead(); toast({ msg: "All notifications marked as read", type: "info" }); }}>Mark all read</button>
+                      <button className="pm-link-btn pm-fs-12" onClick={() => { markNotifsRead(); toast("All notifications marked as read", "info"); }}>Mark all read</button>
                     </div>
                     {notifications.map((n) => (
                       <button key={n.id} className="pm-notif-row" onClick={() => { dismissNotif(n.id); setBellOpen(false); }}>
@@ -934,11 +948,11 @@ function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void;
                 <>
                   <div className="pm-pop-backdrop" onClick={() => setUserMenu(false)} />
                   <div className="pm-pop pm-menu-pop">
-                    <button className="pm-dd-row" onClick={() => { setUserMenu(false); toast({ msg: "Profile coming soon", type: "info" }); }}><User size={14} /> My profile</button>
-                    <button className="pm-dd-row" onClick={() => { setUserMenu(false); toast({ msg: "Settings coming soon", type: "info" }); }}><Settings size={14} /> Settings & Security</button>
+                    <button className="pm-dd-row" onClick={() => { setUserMenu(false); toast("Profile coming soon", "info"); }}><User size={14} /> My profile</button>
+                    <button className="pm-dd-row" onClick={() => { setUserMenu(false); toast("Settings coming soon", "info"); }}><Settings size={14} /> Settings & Security</button>
                     <button className="pm-dd-row" onClick={() => { setUserMenu(false); setBizSwitch(true); }}><Building2 size={14} /> Switch business</button>
                     <div className="pm-dd-sep" />
-                    <button className="pm-dd-row pm-dd-danger" onClick={() => { setUserMenu(false); toast({ msg: "Signed out (demo)", type: "info" }); }}><LogOut size={14} /> Sign out</button>
+                    <button className="pm-dd-row pm-dd-danger" onClick={() => { setUserMenu(false); toast("Signed out (demo)", "info"); }}><LogOut size={14} /> Sign out</button>
                   </div>
                 </>
               )}
@@ -947,7 +961,7 @@ function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void;
         </header>
 
         {/* content */}
-        <PageContent onNavigate={onNavigate} />
+        <PageContent />
       </div>
 
       {/* ══════════ Business Switcher ══════════ */}
@@ -967,7 +981,7 @@ function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void;
                   onClick={() => {
                     setBusiness(b.name);
                     setBizSwitch(false);
-                    toast({ msg: `Switched to ${b.name}`, type: "success" });
+                    toast(`Switched to ${b.name}`, "success");
                   }}
                 >
                   <span className="pm-biz-avatar">{b.emoji}</span>
@@ -982,7 +996,7 @@ function Shell({ onNavigate, currentPage }: { onNavigate?: (p: NavPage) => void;
           </div>
         </>
       )}
-      <ToastHost toasts={toasts} dismissToast={dismissToast} />
+      <ToastHost />
     </div>
   );
 }
