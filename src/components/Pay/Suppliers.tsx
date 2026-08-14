@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import type { Bill, Supplier } from "../../dataPay";
 import { cls, fmt, fmtDate, uid, type QAction } from "../../lib";
-import { Badge, Field, Modal, Section, SlideOver, Stepper } from "../ui";
+import { Badge, Field, Modal, Section, SlideOver, Stepper } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

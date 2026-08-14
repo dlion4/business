@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import type { TaxEvent } from "../../dataBooks";
 import { cls, daysUntil, downloadCSV, fmt, fmtDate, todayISO, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, PillTabs, Section, Toggle } from "../ui";
+import { Badge, Field, Kpi, Modal, PillTabs, Section, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

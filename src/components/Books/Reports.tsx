@@ -5,7 +5,7 @@ import {
 import type { ReportRow } from "../../dataBooks";
 import { bsReport, cfReport, plReport, trialBalance } from "../../dataBooks";
 import { cls, downloadCSV, fmt, fmtDate, todayISO, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, PillTabs, Section, Toggle } from "../ui";
+import { Badge, Field, Kpi, Modal, PillTabs, Section, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

@@ -5,7 +5,7 @@ import {
 import type { Supplier } from "../../dataPay";
 import { statutoryDues, whtRatesSeed } from "../../dataPay";
 import { addDays, daysUntil, downloadCSV, fmt, fmtDate, todayISO, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, Section } from "../ui";
+import { Badge, Field, Kpi, Modal, Section } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

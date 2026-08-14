@@ -5,7 +5,7 @@ import {
 import type { Account } from "../../dataCash";
 import { fmtMoney } from "../../dataCash";
 import { cls, type QAction } from "../../lib";
-import { Field, Modal, Section, Toggle } from "../ui";
+import { Field, Modal, Section, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

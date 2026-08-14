@@ -3,13 +3,13 @@ import {
   Bell, Search, Menu, X, ChevronDown, Plus, Zap, Wallet, Building2,
   CheckCircle2, LayoutGrid, Sparkles, LogOut, User, Settings, Users,
 } from "lucide-react";
-import { entities, modules } from "./data";
+import { entities, modules } from "./dataGetpaid";
 import {
   billsSeed, payNotificationsSeed, suppliersSeed,
   type Bill, type Supplier,
 } from "./dataPay";
 import { cls, fmt, scrollToSection, type QAction } from "./lib";
-import { Avatar, Badge, Modal, ToastProvider, useToast } from "./components/ui";
+import { Avatar, Badge, Modal, ToastProvider, useToast } from "./components/Getpaid/ui";
 import Suppliers from "./components/Pay/Suppliers";
 import Bills from "./components/Pay/Bills";
 import Approvals from "./components/Pay/Approvals";

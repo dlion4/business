@@ -6,7 +6,7 @@ import {
 import type { Account, CashTx } from "../../dataCash";
 import { accountsSeed, fmtMoney } from "../../dataCash";
 import { cls, downloadCSV, fmtDT, todayISO, uid, type QAction } from "../../lib";
-import { Badge, Field, Modal, Section, SlideOver, Sparkline, Stepper, Toggle } from "../ui";
+import { Badge, Field, Modal, Section, SlideOver, Sparkline, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

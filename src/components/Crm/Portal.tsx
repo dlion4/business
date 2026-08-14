@@ -5,7 +5,7 @@ import {
 import type { CrmCustomer } from "../../dataCrm";
 import { portalSettings } from "../../dataCrm";
 import { cls, copyText, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, QrCode, Section, Toggle } from "../ui";
+import { Badge, Field, Kpi, Modal, QrCode, Section, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

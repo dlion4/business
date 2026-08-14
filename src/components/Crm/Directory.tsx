@@ -6,8 +6,8 @@ import {
 } from "lucide-react";
 import type { CrmCustomer, Tier } from "../../dataCrm";
 import { cls, daysAgo, downloadCSV, fmt, fmtDate, uid, type QAction } from "../../lib";
-import { Avatar, Badge, Confirm, EmptyState, Field, Kpi, Modal, PillTabs, Section, SlideOver, Stepper } from "../ui";
-import { invoicesSeed } from "../../data";
+import { Avatar, Badge, Confirm, EmptyState, Field, Kpi, Modal, PillTabs, Section, SlideOver, Stepper } from "../Getpaid/ui";
+import { invoicesSeed } from "../../dataGetpaid";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

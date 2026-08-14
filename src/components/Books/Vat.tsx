@@ -5,7 +5,7 @@ import {
 import type { VatPeriod } from "../../dataBooks";
 import { vatBreakdown } from "../../dataBooks";
 import { cls, daysUntil, downloadCSV, fmt, fmtDate, todayISO, type QAction } from "../../lib";
-import { Badge, Donut, Field, Kpi, Modal, Section, StackedBar, Stepper, Toggle } from "../ui";
+import { Badge, Donut, Field, Kpi, Modal, Section, StackedBar, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

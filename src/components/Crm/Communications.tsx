@@ -6,7 +6,7 @@ import {
 import type { CrmCustomer, Msg, MsgTemplate } from "../../dataCrm";
 import { templatesSeed } from "../../dataCrm";
 import { cls, fmtDT, uid, type QAction } from "../../lib";
-import { Avatar, Badge, EmptyState, Field, Kpi, Modal, Section, SlideOver, Stepper, Toggle } from "../ui";
+import { Avatar, Badge, EmptyState, Field, Kpi, Modal, Section, SlideOver, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

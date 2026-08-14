@@ -9,7 +9,7 @@ import { billCatalog } from "../../dataPay";
 import { addDays, cls, downloadCSV, fmt, fmtDate, fmtDT, todayISO, uid, type QAction } from "../../lib";
 import {
   Badge, Confirm, EmptyState, Field, Modal, PillTabs, Section, SlideOver, Stepper, Toggle,
-} from "../ui";
+} from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

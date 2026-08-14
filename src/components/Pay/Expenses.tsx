@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import type { Expense } from "../../dataPay";
 import { cls, fmt, fmtDate, uid, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, Section, Stepper } from "../ui";
+import { Badge, Field, Kpi, Modal, Section, Stepper } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import type { EtimsDoc } from "../../dataBooks";
 import { cls, fmt, fmtDT, type QAction } from "../../lib";
-import { Badge, EmptyState, Field, Kpi, Modal, PillTabs, Section, SlideOver, Stepper, Toggle } from "../ui";
+import { Badge, EmptyState, Field, Kpi, Modal, PillTabs, Section, SlideOver, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

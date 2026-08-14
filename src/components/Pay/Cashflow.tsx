@@ -5,7 +5,7 @@ import {
 import type { ScheduledPayment } from "../../dataPay";
 import { balanceForecast, forecastLabels, scheduledSeed } from "../../dataPay";
 import { cls, downloadCSV, fmt, fmtDate, todayISO, type QAction } from "../../lib";
-import { Badge, Field, Kpi, LineChart, Modal, Section, Toggle } from "../ui";
+import { Badge, Field, Kpi, LineChart, Modal, Section, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

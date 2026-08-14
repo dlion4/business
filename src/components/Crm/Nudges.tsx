@@ -5,7 +5,7 @@ import {
 import type { CrmCustomer, Nudge } from "../../dataCrm";
 import { nudgesSeed } from "../../dataCrm";
 import { cls, fmt, uid, type QAction } from "../../lib";
-import { Badge, Confirm, Field, Kpi, Modal, Section, SlideOver, Stepper, Toggle } from "../ui";
+import { Badge, Confirm, Field, Kpi, Modal, Section, SlideOver, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

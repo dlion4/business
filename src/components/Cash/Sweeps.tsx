@@ -5,7 +5,7 @@ import {
 import type { SweepRule } from "../../dataCash";
 import { fmtMoney, sweepsSeed } from "../../dataCash";
 import { cls, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, Section, Stepper, Toggle } from "../ui";
+import { Badge, Field, Kpi, Modal, Section, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

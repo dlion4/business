@@ -3,9 +3,9 @@ import {
   FileText, Download, Send, Receipt, ArrowRightLeft, CheckCircle2, Wallet,
 } from "lucide-react";
 import type { CrmCustomer } from "../../dataCrm";
-import { invoicesSeed } from "../../data";
+import { invoicesSeed } from "../../dataGetpaid";
 import { cls, downloadCSV, fmt, fmtDate, todayISO, type QAction } from "../../lib";
-import { Avatar, Badge, Field, Kpi, Modal, Section } from "../ui";
+import { Avatar, Badge, Field, Kpi, Modal, Section } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

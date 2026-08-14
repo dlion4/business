@@ -6,7 +6,7 @@ import {
 import type { Collaborator } from "../../dataBooks";
 import { auditTrailSeed, closeChecklist } from "../../dataBooks";
 import { cls, downloadCSV, fmtDT, todayISO, uid, type QAction } from "../../lib";
-import { Avatar, Badge, Confirm, Field, Kpi, Modal, Section, SlideOver, Stepper, Toggle } from "../ui";
+import { Avatar, Badge, Confirm, Field, Kpi, Modal, Section, SlideOver, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

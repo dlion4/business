@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import { employeesSeed, payrollStats } from "../../dataPay";
 import { addDays, cls, fmt, fmtDate, todayISO, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, Section, Stepper, Toggle } from "../ui";
+import { Badge, Field, Kpi, Modal, Section, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

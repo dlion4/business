@@ -5,7 +5,7 @@ import {
 import type { Account, RateRow } from "../../dataCash";
 import { fmtMoney, ratesSeed } from "../../dataCash";
 import { cls, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, Section, Sparkline, Stepper } from "../ui";
+import { Badge, Field, Kpi, Modal, Section, Sparkline, Stepper } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

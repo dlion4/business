@@ -5,7 +5,7 @@ import {
 import type { Beneficiary } from "../../dataCash";
 import { bulkSample, fmtMoney } from "../../dataCash";
 import { cls, uid, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, Section, Stepper } from "../ui";
+import { Badge, Field, Kpi, Modal, Section, Stepper } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 type BulkRow = { name: string; target: string; method: string; amount: number };

@@ -3,10 +3,10 @@ import {
   Bell, Search, Menu, X, ChevronDown, Zap, Wallet, Building2, Users,
   CheckCircle2, LayoutGrid, Sparkles, LogOut, User, Settings, Landmark, BookOpen,
 } from "lucide-react";
-import { entities, modules } from "./data";
+import { entities, modules } from "./dataGetpaid";
 import { crmCustomersSeed, crmNotificationsSeed, msgsSeed, type CrmCustomer, type Msg } from "./dataCrm";
 import { cls, fmt, scrollToSection, type QAction } from "./lib";
-import { Avatar, Badge, Modal, ToastProvider, useToast } from "./components/ui";
+import { Avatar, Badge, Modal, ToastProvider, useToast } from "./components/Getpaid/ui";
 import Directory from "./components/Crm/Directory";
 import Communications from "./components/Crm/Communications";
 import Ledger from "./components/Crm/Ledger";

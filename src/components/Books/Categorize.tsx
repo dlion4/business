@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import type { BookTx, CoaAccount } from "../../dataBooks";
 import { cls, fmt, fmtDT, uid, type QAction } from "../../lib";
-import { Badge, Confirm, EmptyState, Field, Kpi, Modal, PillTabs, Section, SlideOver, Toggle } from "../ui";
+import { Badge, Confirm, EmptyState, Field, Kpi, Modal, PillTabs, Section, SlideOver, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

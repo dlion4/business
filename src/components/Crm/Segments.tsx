@@ -6,7 +6,7 @@ import {
 import type { CrmCustomer, SmartList } from "../../dataCrm";
 import { CRM_FIELDS, segmentDefs, smartListsSeed } from "../../dataCrm";
 import { cls, downloadCSV, fmt, todayISO, uid, type QAction } from "../../lib";
-import { Avatar, Badge, Confirm, Field, Kpi, Modal, Section, SlideOver, Stepper } from "../ui";
+import { Avatar, Badge, Confirm, Field, Kpi, Modal, Section, SlideOver, Stepper } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

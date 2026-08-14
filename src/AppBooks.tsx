@@ -3,7 +3,7 @@ import {
   Bell, Search, Menu, X, ChevronDown, Zap, Wallet, Building2, BookOpen,
   CheckCircle2, LayoutGrid, Sparkles, LogOut, User, Settings, Users, Landmark, Receipt,
 } from "lucide-react";
-import { entities, modules } from "./data";
+import { entities, modules } from "./dataGetpaid";
 import {
   bookNotificationsSeed, bookTxsSeed, coaSeed, collaboratorsSeed, etimsSeed,
   journalsSeed, taxEventsSeed, vatPeriodsSeed,
@@ -11,7 +11,7 @@ import {
   type TaxEvent, type VatPeriod,
 } from "./dataBooks";
 import { cls, fmt, scrollToSection, type QAction } from "./lib";
-import { Avatar, Badge, Modal, ToastProvider, useToast } from "./components/ui";
+import { Avatar, Badge, Modal, ToastProvider, useToast } from "./components/Getpaid/ui";
 import Overview from "./components/Books/Overview";
 import Categorize from "./components/Books/Categorize";
 import Journals from "./components/Books/Journals";

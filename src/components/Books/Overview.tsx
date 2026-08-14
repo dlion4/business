@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import { plExpenses, plMonths, plRevenue } from "../../dataBooks";
 import { cls, fmt, type QAction } from "../../lib";
-import { Badge, Donut, Kpi, LineChart, Modal, Section } from "../ui";
+import { Badge, Donut, Kpi, LineChart, Modal, Section } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

@@ -5,7 +5,7 @@ import {
 import type { VCard } from "../../dataCash";
 import { fmtMoney } from "../../dataCash";
 import { cls, uid, type QAction } from "../../lib";
-import { Confirm, Field, Kpi, Modal, Section, SlideOver, Stepper, Toggle } from "../ui";
+import { Confirm, Field, Kpi, Modal, Section, SlideOver, Stepper, Toggle } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 

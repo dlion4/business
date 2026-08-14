@@ -6,7 +6,7 @@ import {
 import type { Account } from "../../dataCash";
 import { fmtMoney } from "../../dataCash";
 import { addDays, cls, fmtDT, todayISO, uid, type QAction } from "../../lib";
-import { Badge, Field, Kpi, Modal, Section, Stepper } from "../ui";
+import { Badge, Field, Kpi, Modal, Section, Stepper } from "../Getpaid/ui";
 
 type Notify = (t: { tone: "success" | "warning" | "danger" | "info"; title: string; body?: string }) => void;
 type Transfer = { id: string; from: string; to: string; amount: number; date: string; status: "completed" | "scheduled"; memo: string };
